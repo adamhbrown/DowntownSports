@@ -1,91 +1,67 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Downtown Sports - Where the Goats Play</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Downtown Sports Network | 2026 World Cup Shootout</title>
 <style>
-:root {
---primary: #ff9800;
---secondary: #03a9f4;
---dark-bg: #1a202c;
---light-bg: #f8fafc;
---card-bg: #ffffff;
---text-color: #2d3748;
-}
-body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--light-bg); color: var(--text-color); margin: 0; padding: 0; }
-header { background: linear-gradient(135deg, var(--primary), #e68900); color: #fff; padding: 40px 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-h1 { margin: 0 0 8px 0; font-size: 2.8em; font-weight: 800; letter-spacing: -0.05em; }
-.slogan { font-weight: 500; color: #ffe0b2; font-size: 1.2em; text-transform: uppercase; letter-spacing: 0.1em; }
-nav { margin: 30px auto; max-width: 800px; display: flex; gap: 15px; justify-content: center; background: var(--card-bg); padding: 10px; border-radius: 50px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-button { padding: 12px 28px; cursor: pointer; background: transparent; color: var(--text-color); border: none; border-radius: 25px; font-weight: 600; font-size: 0.95em; transition: all 0.3s ease; }
-button:hover, button.active { background: var(--secondary); color: #fff; box-shadow: 0 4px 10px rgba(3, 169, 244, 0.3); }
-.main-container { max-width: 1000px; margin: 0 auto 40px auto; padding: 0 20px; }
-.tab-content { display: none; background: var(--card-bg); padding: 40px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); animation: fadeIn 0.4s ease-in-out; }
-.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 20px; }
-th, td { padding: 16px; text-align: left; border-bottom: 1px solid #edf2f7; }
-th { background-color: #f1f5f9; color: #4a5568; font-weight: 600; font-size: 0.9em; text-transform: uppercase; letter-spacing: 0.05em; }
-tr:last-child td { border-bottom: none; }
-tr:hover { background-color: #f8fafc; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background-color: #f4f4f9; color: #333; margin: 0; padding: 20px; }
+header { background: #1a1a2e; color: #fff; padding: 2rem; text-align: center; border-radius: 8px; margin-bottom: 20px; }
+h1 { margin: 0; text-transform: uppercase; letter-spacing: 2px; }
+.container { max-width: 1000px; margin: auto; }
+section { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+h2 { color: #1a1a2e; border-bottom: 2px solid #e74c3c; padding-bottom: 10px; }
+table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+th { background-color: #f8f8f8; }
+.scoring-recap { font-size: 0.9rem; }
 </style>
 </head>
 <body>
 
+<div class="container">
 <header>
 <h1>Downtown Sports Network</h1>
-<div class="slogan">Where the Goats Play</div>
+<p>2026 World Cup Shootout Official Standings</p>
 </header>
 
-<nav>
-<button class="active" onclick="showTab('draft', this)">Draft Board</button>
-<button onclick="showTab('standings', this)">Standings</button>
-<button onclick="showTab('scores', this)">Scores & Schedule</button>
-<button onclick="showTab('golden-boot', this)">Golden Boot</button>
-</nav>
-
-<div class="main-container">
-<div id="draft" class="tab-content active">
-<h2>Snake Draft Board</h2>
-<table>
-<tr><th>Round</th><th>Pick</th><th>Team</th><th>Country</th></tr>
-<tr><td>1</td><td>1</td><td>[User]</td><td>[Country]</td></tr>
+<section>
+<h2>Scoring Recap</h2>
+<table class="scoring-recap">
+<tr><th>Round</th><th>Scoring Format (Reg - OT - SO)</th></tr>
+<tr><td>Group Play</td><td>3 pts for Win, 1 pt for Tie</td></tr>
+<tr><td>Round of 32</td><td>4 - 3 - 2</td></tr>
+<tr><td>Round of 16</td><td>5 - 4 - 3</td></tr>
+<tr><td>Quarterfinals</td><td>6 - 5 - 4</td></tr>
+<tr><td>Semifinals</td><td>7 - 6 - 5</td></tr>
+<tr><td>3rd Place Game</td><td>3 - 2 - 1</td></tr>
+<tr><td>Championship</td><td>8 - 7 - 6</td></tr>
 </table>
-</div>
+</section>
 
-<div id="standings" class="tab-content">
-<h2>League Standings</h2>
+<section>
+<h2>Group Standings</h2>
+<h3>Group A</h3>
 <table>
-<tr><th>Rank</th><th>Player</th><th>Countries</th><th>Points</th></tr>
-<tr><td>1</td><td>[Player]</td><td>[Country]</td><td>0</td></tr>
+<tr><th>Franchise</th><th>Record</th><th>Scored</th><th>Allowed</th><th>Diff</th></tr>
+<tr><td>MEXICO</td><td>0-0</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>SOUTH KOREA</td><td>0-0</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>SOUTH AFRICA</td><td>0-0</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>CZECH REPUBLIC</td><td>0-0</td><td>0</td><td>0</td><td>0</td></tr>
 </table>
-</div>
+</section>
 
-<div id="scores" class="tab-content">
-<h2>Scores & Schedule</h2>
+<section>
+<h2>Golden Boot Race</h2>
 <table>
-<tr><th>Match</th><th>Group</th><th>Result</th><th>Date</th></tr>
-<tr><td>Team A vs Team B</td><td>Group A</td><td>0 - 0</td><td>June 11</td></tr>
+<tr><th>Goals</th><th>Country</th><th>Player Name</th><th>Franchise</th></tr>
+<tr><td colspan="4">No goals recorded yet.</td></tr>
 </table>
+</section>
 </div>
-
-<div id="golden-boot" class="tab-content">
-<h2>Golden Boot Tracker</h2>
-<table>
-<tr><th>Player</th><th>Country</th><th>Goals</th></tr>
-<tr><td>[Player]</td><td>[Country]</td><td>0</td></tr>
-</table>
-</div>
-</div>
-
-<script>
-function showTab(tabId, btn) {
-document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-document.getElementById(tabId).classList.add('active');
-btn.classList.add('active');
-}
-</script>
 
 </body>
 </html>

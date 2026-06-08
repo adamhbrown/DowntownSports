@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downtown Sports Network</title>
+    <style>
+        /* Base Setup Styles - Sleek Dark Theme */
+        body {
+            background-color: #111111;
+            color: #ffffff;
+            font-family: 'Arial Black', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Running Ticker Banner */
+        .ticker-wrap {
+            width: 100%;
+            background: #ffcc00;
+            color: #000000;
+            padding: 10px 0;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+        .ticker {
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker-move 25s linear infinite;
+        }
+        @keyframes ticker-move {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        /* Header Branding Layout */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(180deg, #1f1f1f 0%, #111111 100%);
+            border-bottom: 3px solid #ffcc00;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+        header h1 span {
+            color: #ffcc00;
+        }
+        header .tagline {
+            font-family: 'Arial', sans-serif;
+            color: #888;
+            font-size: 1.1rem;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Page Layout Structural Grid */
+        .main-layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        @media (min-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        /* Core Card Widgets */
+        .card {
+            background: #1a1a1a;
+            border: 1px solid #2d2d2d;
+            border-radius: 8px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .card h2, .card h3 {
+            margin-top: 0;
+            text-transform: uppercase;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        .card h2 span, .card h3 span {
+            color: #ffcc00;
+        }
+
+        /* Interactive Controls Styling */
+        .draft-panel {
+            background: #252525;
+            border: 2px solid #ffcc00;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        .control-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .control-group label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: #aaa;
+        }
+        .control-group select {
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 4px;
+            font-family: sans-serif;
+            min-width: 180px;
+        }
+        .btn-draft {
+            background: #ffcc00;
+            color: black;
+            font-weight: bold;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            text-transform: uppercase;
+            transition: background 0.2s;
+        }
+        .btn-draft:hover { background: #e6b800; }
+        .btn-draft:disabled { background: #444; color: #888; cursor: not-allowed; }
+        
+        .btn-reset {
+            background: #cc3333;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        /* Status Tickers */
+        .status-bar {
+            background: #000;
+            padding: 12px;
+            border-left: 4px solid #ffcc00;
+            font-family: monospace;
+            font-size: 1rem;
+            color: #ffcc00;
+            margin-bottom: 20px;
+        }
+
+        /* Flexible Grid for Visual Round Progress Tracking */
+        .rounds-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+        .round-column {
+            background: #111;
+            border: 1px solid #2d2d2d;
+            border-radius: 4px;
+            padding: 12px;
+        }
+        .round-column h4 {
+            margin: 0 0 10px 0;
+            color: #ffcc00;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            text-align: center;
+            background: #222;
+            padding: 5px;
+        }
+        .round-column ol {
+            padding-left: 20px;
+            margin: 0;
+        }
+        .round-column li {
+            font-family: sans-serif;
+            font-size: 0.9rem;
+            padding: 6px 0;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        /* Matrix Tables Formatting */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-family: sans-serif;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #2d2d2d;
+        }
+        th {
+            background-color: #222;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: #aaa;
+            font-family: 'Arial Black', sans-serif;
+        }
+        tbody tr:hover {
+            background-color: #1f1f1f;
+        }
+
+        /* Multi-Group Tournament Matrices Container */
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .group-box h4 {
+            margin: 10px 0;
+            color: #ffcc00;
+            font-size: 1.1rem;
+        }
+
+        /* Info Matrix Callout row */
+        .matrix-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #2d2d2d;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ticker-wrap">
+        <div class="ticker">
+            ★ PLAY LIKE A GOAT • THE GOATS PLAY HERE • CAN’T STOP THE BAA • DOWNTOWN SPORTS NETWORK OVERDRIVE • PLAY LIKE A GOAT • THE GOATS PLAY HERE • CAN’T STOP THE BAA ★
+        </div>
+    </div>
+
+    <header>
+        <h1>Downtown Sports <span>Network</span></h1>
+        <div class="tagline">The GOAT Standard. Dispute the Rest.</div>
+    </header>
+
+    <div class="main-layout">
+        
+        <div style="display: flex; flex-direction: column; gap: 30px;">
+            
+            <div class="card">
+                <h2>8-Person Snake Draft Board <span>Active</span></h2>
+                
+                <div class="draft-panel">
+                    <div class="control-group">
+                        <div>
+                            <label style="display:block; margin-bottom:5px;">Current Manager Assignment</label>
+                            <select id="manager-select">
+                                <option value="Manager 1">Manager 1</option>
+                                <option value="Manager 2">Manager 2</option>
+                                <option value="Manager 3">Manager 3</option>
+                                <option value="Manager 4">Manager 4</option>
+                                <option value="Manager 5">Manager 5</option>
+                                <option value="Manager 6">Manager 6</option>
+                                <option value="Manager 7">Manager 7</option>
+                                <option value="Manager 8">Manager 8</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label style="display:block; margin-bottom:5px;">Select Free Agent Team</label>
+                            <select id="team-select">
+                                </select>
+                        </div>
+                        
+                        <div style="padding-top: 20px;">
+                            <button id="draft-btn" class="btn-draft">Draft Selection</button>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: right; margin-top: -10px;">
+                        <button id="reset-draft-btn" class="btn-reset">Reset Draft Data</button>
+                    </div>
+                </div>
+
+                <div id="draft-status" class="status-bar">
+                    Initializing engine...
+                </div>
+
+                <div class="rounds-container">
+                    <div class="round-column">
+                        <h4>Round 1</h4>
+                        <ol id="round1-list"></ol>
+                    </div>
+                    <div class="round-column">
+                        <h4>Round 2</h4>
+                        <ol id="round2-list" start="1"></ol>
+                    </div>
+                    <div class="round-column">
+                        <h4>Round 3</h4>
+                        <ol id="round3-list" start="1"></ol>
+                    </div>
+                    <div class="round-column">
+                        <h4>Round 4</h4>
+                        <ol id="round4-list" start="1"></ol>
+                    </div>
+                    <div class="round-column">
+                        <h4>Round 5</h4>
+                        <ol id="round5-list" start="1"></ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>World Cup Group Stage Standings</h2>
+                <div class="groups-grid">
+                    
+                    <div class="group-box">
+                        <h4>Group A</h4>
+                        <table>
+                            <thead><tr><th>#</th><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>Mexico</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>2</td><td>South Korea</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>3</td><td>South Africa</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>4</td><td>Czech Republic</td><td>0</td><td>0</td><td>0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="group-box">
+                        <h4>Group B</h4>
+                        <table>
+                            <thead><tr><th>#</th><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>Switzerland</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>2</td><td>Canada</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>3</td><td>Qatar</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>4</td><td>Bosnia &amp; Herz.</td><td>0</td><td>0</td><td>0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="group-box">
+                        <h4>Group C</h4>
+                        <table>
+                            <thead><tr><th>#</th><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>Brazil</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>2</td><td>Morocco</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>3</td><td>Scotland</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>4</td><td>Haiti</td><td>0</td><td>0</td><td>0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="group-box">
+                        <h4>Group D</h4>
+                        <table>
+                            <thead><tr><th>#</th><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>USA</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>2</td><td>Australia</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>3</td><td>Paraguay</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>4</td><td>Turkey</td><td>0</td><td>0</td><td>0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="group-box">
+                        <h4>Group E</h4>
+                        <table>
+                            <thead><tr><th>#</th><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>Germany</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>2</td><td>Ecuador</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>3</td><td>Ivory Coast</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>4</td><td>Curacao</td><td>0</td><td>0</td><td>0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="group-box">
+                        <h4>Group F</h4>
+                        <table>
+                            <thead><tr><th>#</th><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>Netherlands</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>2</td><td>Japan</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>3</td><td>Tunisia</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>4</td><td>Sweden</td><td>0</td><td>0</td><td>0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="group-box">
+                        <h4>Group G</h4>
+                        <table>
+                            <thead><tr><th>#</th><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>Belgium</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>2</td><td>New Zealand</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>3</td><td>Egypt</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>4</td><td>Iran</td><td>0</td><td>0</td><td>0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="group-box">
+                        <h4>Group H</h4>
+                        <table>
+                            <thead><tr><th>#</th><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>Spain</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>2</td><td>Uruguay</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>3</td><td>Saudi Arabia</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>4</td><td>Cabo Verde</td><td>0</td><td>0</td><td>0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="group-box">
+                        <h4>Group I</h4>
+                        <table>
+                            <thead><tr><th>#</th><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>France</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>2</td><td>Senegal</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>3</td><td>Norway</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>4</td><td>Iraq</td><td>0</td><td>0</td><td>0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="group-box">
+                        <h4>Group J</h4>
+                        <table>
+                            <thead><tr><th>#</th><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>Argentina</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>2</td><td>Austria</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>3</td><td>Algeria</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>4</td><td>Jordan</td><td>0</td><td>0</td><td>0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="group-box">
+                        <h4>Group K</h4>
+                        <table>
+                            <thead><tr><th>#</th><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>Portugal</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>2</td><td>Panama</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>3</td><td>Ghana</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>4</td><td>Congo</td><td>0</td><td>0</td><td>0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="group-box">
+                        <h4>Group L</h4>
+                        <table>
+                            <thead><tr><th>#</th><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>England</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>2</td><td>Croatia</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>3</td><td>Colombia</td><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>4</td><td>Uzbekistan</td><td>0</td><td>0</td><td>0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 30px;">
+            
+            <div class="card">
+                <h3>Master Scoring Matrix</h3>
+                <div class="matrix-row">
+                    <span>🏁 Regulation Win</span>
+                    <strong>3 Points</strong>
+                </div>
+                <div class="matrix-row">
+                    <span>⏱️ Overtime Win (OT)</span>
+                    <strong>2 Points</strong>
+                </div>
+                <div class="matrix-row">
+                    <span>🎯 Shootout Win (SO)</span>
+                    <strong>1 Point</strong>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Network Leaderboard</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Manager</th>
+                            <th>Active Pool</th>
+                            <th>Total PTS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Evan Mandel</td>
+                            <td>NHL Playoffs</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Manager 1</td>
+                            <td>World Cup</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Manager 2</td>
+                            <td>World Cup</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // 1. Full available roster mappings extracted straight from league matrix arrays above
+        const worldCupTeams = [
+            "Mexico", "South Korea", "South Africa", "Czech Republic",
+            "Switzerland", "Canada", "Qatar", "Bosnia & Herz.",
+            "Brazil", "Morocco", "Scotland", "Haiti",
+            "USA", "Australia", "Paraguay", "Turkey",
+            "Germany", "Ecuador", "Ivory Coast", "Curacao",
+            "Netherlands", "Japan", "Tunisia", "Sweden",
+            "Belgium", "New Zealand", "Egypt", "Iran",
+            "Spain", "Uruguay", "Saudi Arabia", "Cabo Verde",
+            "France", "Senegal", "Norway", "Iraq",
+            "Argentina", "Austria", "Algeria", "Jordan",
+            "Portugal", "Panama", "Ghana", "Congo",
+            "England", "Croatia", "Colombia", "Uzbekistan"
+        ].sort(); // Standard alphabetical lookup injection
+
+        // 2. Setup structural variables for tracking snake rules
+        const totalRounds = 5;
+        const numManagers = 8;
+        let draftOrder = [];
+
+        // Build continuous standard indices for 5 complete multi-direction layers
+        for (let r = 1; r <= totalRounds; r++) {
+            let roundOrder = [];
+            for (let m = 1; m <= numManagers; m++) {
+                roundOrder.push(`Manager ${m}`);
+            }
+            if (r % 2 === 0) {
+                roundOrder.reverse(); // Standard Snake turn toggle logic 
+            }
+            draftOrder.push(...roundOrder);
+        }
+
+        // 3. Application persistence state check variables
+        let currentPickIndex = 0;
+        let draftedTeams = {}; // Stored format: { pickIndex: { manager: Name, team: PickedTeam } }
+
+        // Local Storage check to maintain data integrity across screen refreshes
+        if (localStorage.getItem('downtownDraftData')) {
+            draftedTeams = JSON.parse(localStorage.getItem('downtownDraftData'));
+            currentPickIndex = Object.keys(draftedTeams).length;
+        }
+
+        // 4. Initial core rendering configurations
+        function initDraftEngine() {
+            populateTeamsDropdown();
+            renderRoundLists();
+            updateInterfaceUI();
+        }
+
+        // Filter out choices already logged by participants
+        function populateTeamsDropdown() {
+            const select = document.getElementById('team-select');
+            select.innerHTML = '';
+
+            const takenTeams = Object.values(draftedTeams).map(item => item.team);
+            
+            worldCupTeams.forEach(team => {
+                if (!takenTeams.includes(team)) {
+                    const option = document.createElement('option');
+                    option.value = team;
+                    option.textContent = team;
+                    select.appendChild(option);
+                }
+            });
+        }
+
+        // Maps entries directly into corresponding display sections on screen
+        function renderRoundLists() {
+            for (let i = 1; i <= totalRounds; i++) {
+                document.getElementById(`round${i}-list`).innerHTML = '';
+            }
+
+            draftOrder.forEach((manager, index) => {
+                const roundNumber = Math.floor(index / numManagers) + 1;
+                const targetList = document.getElementById(`round${roundNumber}-list`);
+                
+                const li = document.createElement('li');
+                
+                if (draftedTeams[index]) {
+                    li.innerHTML = `<strong style="color:#aaa;">${draftedTeams[index].manager}:</strong> <span style="color:#ffcc00; font-weight:bold;">${draftedTeams[index].team}</span>`;
+                } else {
+                    li.innerHTML = `<span style="opacity:0.3;">${manager}</span>`;
+                }
+                targetList.appendChild(li);
+            });
+        }
+
+        // Updates state elements tracking live sequence positions
+        function updateInterfaceUI() {
+            const statusText = document.getElementById('draft-status');
+            const managerSelect = document.getElementById('manager-select');
+            const draftBtn = document.getElementById('draft-btn');
+
+            if (currentPickIndex >= draftOrder.length) {
+                statusText.textContent = "✓ SYSTEM DRAFT ARCHIVE COMPLETED.";
+                draftBtn.disabled = true;
+                return;
+            }
+
+            const activeManager = draftOrder[currentPickIndex];
+            const currentRoundNum = Math.floor(currentPickIndex / numManagers) + 1;
+            const currentPickInRound = (currentPickIndex % numManagers) + 1;
+
+            statusText.textContent = `▶ UP NEXT: Round ${currentRoundNum}, Pick ${currentPickInRound} ➔ ${activeManager}`;
+            managerSelect.value = activeManager; // Sync tracking select row elements automatically
+        }
+
+        // 5. User action controls configuration hooks
+        document.getElementById('draft-btn').addEventListener('click', () => {
+            const teamSelect = document.getElementById('team-select');
+            const teamChoice = teamSelect.value;
+
+            if (!teamChoice) {
+                alert("Allocation complete. No available teams remain on the free-agency boards.");
+                return;
+            }
+
+            const activeManager = draftOrder[currentPickIndex];
+
+            // Commit state mapping data parameters
+            draftedTeams[currentPickIndex] = {
+                manager: activeManager,
+                team: teamChoice
+            };
+
+            currentPickIndex++;
+
+            // Cache data directly to host platform storage allocation keys
+            localStorage.setItem('downtownDraftData', JSON.stringify(draftedTeams));
+
+            // Refresh execution view states
+            populateTeamsDropdown();
+            renderRoundLists();
+            updateInterfaceUI();
+        });
+
+        // Safe erase mechanism to drop cache keys and roll back states
+        document.getElementById('reset-draft-btn').addEventListener('click', () => {
+            if (confirm("CRITICAL WARNING: This will permanently wipe all current draft board tracking entries. Proceed?")) {
+                localStorage.removeItem('downtownDraftData');
+                draftedTeams = {};
+                currentPickIndex = 0;
+                document.getElementById('draft-btn').disabled = false;
+                initDraftEngine();
+            }
+        });
+
+        // Fire engine activation routines upon file mounting completions
+        initDraftEngine();
+    </script>
+</body>
+</html>

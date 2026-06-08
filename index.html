@@ -3,54 +3,306 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DSN | THE GOAT STANDARD</title>
+    <title>Downtown Sports Network | DSN</title>
     <style>
-        :root { --red: #d50000; --gold: #ffd700; --dark: #0a0a0a; --surface: #1a1a1a; --text: #ffffff; }
-        body { font-family: 'Roboto Condensed', sans-serif; background-color: var(--dark); color: var(--text); margin: 0; padding-bottom: 70px; }
-        header { background: linear-gradient(to bottom, #000, var(--surface)); padding: 40px 20px; border-bottom: 5px solid var(--red); text-align: center; }
-        .brand { font-size: 3rem; font-weight: 900; color: var(--red); text-transform: uppercase; letter-spacing: 5px; }
-        .slogan { color: var(--gold); font-style: italic; font-size: 1.1rem; margin-top: 5px; }
-        .container { max-width: 1000px; margin: 30px auto; padding: 20px; }
-        .card { background: var(--surface); padding: 25px; border-radius: 8px; border-top: 4px solid var(--red); margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        h2 { color: var(--red); text-transform: uppercase; font-size: 1.4rem; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.95rem; margin-bottom: 20px; }
-        th { background: #222; color: var(--gold); padding: 12px; text-transform: uppercase; font-size: 0.8rem; text-align: left; }
-        td { padding: 12px; border-bottom: 1px solid #333; }
-        .draft-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
-        .slot { background: #000; padding: 15px; text-align: center; border: 1px solid var(--red); border-radius: 4px; font-size: 0.85rem; }
-        .ticker-wrap { position: fixed; bottom: 0; width: 100%; background: #000; color: var(--gold); padding: 12px; border-top: 2px solid var(--red); overflow: hidden; white-space: nowrap; z-index: 1000; }
-        .ticker { display: inline-block; animation: scroll 25s linear infinite; font-weight: bold; }
-        @keyframes scroll { 0% { transform: translate(100%, 0); } 100% { transform: translate(-100%, 0); } }
+        /* --- PREMIUM SPORTS PLATFORM STYLING (FanDuel/DraftKings Inspired) --- */
+        :root {
+            --bg-dark: #0b0e11;
+            --bg-card: #181c22;
+            --bg-header: #040608;
+            --accent-green: #00e676;
+            --accent-gold: #ffb300;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --border-color: #2a313c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        /* --- HEADER & BRANDING --- */
+        header {
+            background-color: var(--bg-header);
+            border-bottom: 3px solid var(--accent-green);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .network-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-main);
+        }
+
+        .network-title span {
+            color: var(--accent-green);
+        }
+
+        .slogan-ticker {
+            background: linear-gradient(90deg, var(--accent-gold), #ff8f00);
+            color: #000;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            padding: 6px 0;
+            letter-spacing: 1.5px;
+            word-spacing: 10px;
+        }
+
+        /* --- MAIN LAYOUT --- */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .hub-banner {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-left: 5px solid var(--accent-gold);
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .hub-banner h2 {
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .hub-banner p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* --- RESPONSIVE GRIDS --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        @media (min-width: 900px) {
+            .dashboard-grid {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        /* --- CARD STYLING --- */
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card h3::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent-green);
+            position: absolute;
+            bottom: -2px;
+        }
+
+        /* --- DATA TABLES --- */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--accent-green);
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 12px 10px;
+            border-bottom: 2px solid var(--border-color);
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 14px 10px;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 500;
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Highlight Draft/Standings elements */
+        .highlight-cell {
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        .badge {
+            background-color: var(--accent-green);
+            color: #000;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <div class="brand">DOWNTOWN SPORTS NETWORK</div>
-        <div class="slogan">THE GOAT STANDARD. DISPUTE THE REST.</div>
-    </header>
-    <div class="container">
-        <section class="card">
-            <h2>8-Person Snake Draft Board</h2>
-            <div class="draft-grid" id="draft-board"></div>
-        </section>
-        <section class="card">
-            <h2>League Standings</h2>
-            <table>
-                <tr><th>League</th><th>Leader</th><th>Status</th></tr>
-                <tr><td>NHL Playoffs</td><td>Evan Mandel</td><td>Active</td></tr>
-                <tr><td>World Cup</td><td>TBD</td><td>Draft Pending</td></tr>
-            </table>
-        </section>
+
+    <!-- BRAND TICKER -->
+    <div class="slogan-ticker">
+        PLAY LIKE A GOAT • THE GOATS PLAY HERE • CAN’T STOP THE BAA • PLAY LIKE A GOAT • THE GOATS PLAY HERE
     </div>
-    <div class="ticker-wrap">
-        <div class="ticker">
-            DSN MASTER HUB ACTIVE | THE GOAT STANDARD IS THE ONLY STANDARD.
+
+    <!-- MAIN HEADER -->
+    <header>
+        <h1 class="network-title">Downtown Sports <span>Network</span></h1>
+    </header>
+
+    <div class="container">
+        
+        <!-- MASTER HUB BANNER -->
+        <div class="hub-banner">
+            <h2>DSN Master Hub</h2>
+            <p>The centralized nerve center for competitive league drafting, live standings, and elite pool tracking.</p>
+        </div>
+
+        <!-- MAIN DASHBOARD CONTENT -->
+        <div class="dashboard-grid">
+            
+            <!-- LEFT COLUMN: DRAFT BOARD -->
+            <div class="card">
+                <h3>8-Person Snake Draft Board <span class="badge">Live</span></h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Round</th>
+                                <th>Pick 1</th>
+                                <th>Pick 2</th>
+                                <th>Pick 3</th>
+                                <th>Pick 4</th>
+                                <th>Pick 5</th>
+                                <th>Pick 6</th>
+                                <th>Pick 7</th>
+                                <th>Pick 8</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="highlight-cell">Round 1</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                            </tr>
+                            <tr>
+                                <td class="highlight-cell">Round 2</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                            </tr>
+                            <tr>
+                                <td class="highlight-cell">Round 3</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: STANDINGS -->
+            <div class="card">
+                <h3>League Standings</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Pos</th>
+                                <th>Team/Player</th>
+                                <th>PTS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="highlight-cell">1</td>
+                                <td>—</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="highlight-cell">2</td>
+                                <td>—</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="highlight-cell">3</td>
+                                <td>—</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="highlight-cell">4</td>
+                                <td>—</td>
+                                <td>0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
-    <script>
-        const drafters = ["Darryl", "Matt", "Josh", "Adam", "Rome", "Adam B", "Ryan", "Becca"];
-        const board = document.getElementById('draft-board');
-        drafters.forEach((d, i) => board.innerHTML += `<div class="slot">Pick ${i+1}<br><strong>${d}</strong></div>`);
-    </script>
+
 </body>
 </html>

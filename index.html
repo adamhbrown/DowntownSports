@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downtown Sports Network</title>
+    <style>
+        /* Immersive Tunnel/Locker Room Entrance Video/Animation Framework */
+        #stadium-entrance {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle, #222 10%, #000 100%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s cubic-bezier(0.77, 0, 0.175, 1), visibility 1.5s;
+        }
+        .tunnel-lights {
+            font-size: 5rem;
+            animation: pulse-lights 1.5s infinite alternate;
+            margin-bottom: 20px;
+        }
+        @keyframes pulse-lights {
+            0% { text-shadow: 0 0 10px #fff, 0 0 20px #ffcc00; transform: scale(0.95); }
+            100% { text-shadow: 0 0 30px #fff, 0 0 60px #ffcc00; transform: scale(1.05); }
+        }
+        .entrance-btn {
+            background: #ffcc00;
+            color: #000;
+            font-family: 'Arial Black', sans-serif;
+            font-size: 1.8rem;
+            padding: 20px 40px;
+            border: 4px solid #fff;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.6);
+            border-radius: 8px;
+            letter-spacing: 2px;
+        }
+        .entrance-btn:hover {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 1);
+        }
+
+        /* Base Configuration Theme */
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            font-family: 'Arial Black', -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Running GOAT Slogan Ticker */
+        .ticker-wrap {
+            width: 100%;
+            background: #ffcc00;
+            color: #000000;
+            padding: 12px 0;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            border-bottom: 2px solid #fff;
+        }
+        .ticker {
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker-move 30s linear infinite;
+        }
+        @keyframes ticker-move {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        /* Premium ESPN/FanDuel Style Branding */
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+            border-bottom: 4px solid #ffcc00;
+            position: relative;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            text-shadow: 2px 2px 0px #000;
+        }
+        header h1 span { color: #ffcc00; }
+        header .tagline {
+            font-family: 'Arial', sans-serif;
+            color: #aaa;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: bold;
+        }
+
+        /* Main Screen Layout Components */
+        .main-layout {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 35px;
+        }
+        @media (min-width: 1200px) {
+            .main-layout { grid-template-columns: 2.2fr 1fr; }
+        }
+
+        .card {
+            background: #161616;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .card h2, .card h3 {
+            margin-top: 0;
+            text-transform: uppercase;
+            border-bottom: 3px solid #ffcc00;
+            padding-bottom: 12px;
+            font-size: 1.6rem;
+            letter-spacing: -0.5px;
+        }
+
+        /* Complete Controls Layer */
+        .interactive-panel {
+            background: #202020;
+            border: 1px solid #333;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-end;
+        }
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .form-field label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: #ffcc00;
+            letter-spacing: 1px;
+        }
+        select, input[type="number"] {
+            background: #111;
+            color: #fff;
+            border: 2px solid #444;
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 6px;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+        }
+        select:focus, input:focus { border-color: #ffcc00; outline: none; }
+        
+        .btn {
+            background: #ffcc00;
+            color: #000;
+            font-weight: bold;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 6px;
+            text-transform: uppercase;
+            font-family: 'Arial Black', sans-serif;
+            transition: all 0.2s ease;
+        }
+        .btn:hover { background: #fff; transform: translateY(-1px); }
+        .btn:disabled { background: #333; color: #666; cursor: not-allowed; transform: none; }
+        .btn-danger { background: #cc3333; color: white; padding: 8px 16px; font-size: 0.85rem; }
+        .btn-danger:hover { background: #ff4444; }
+
+        .status-tracker {
+            background: #000;
+            padding: 15px;
+            border-left: 5px solid #ffcc00;
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: #ffcc00;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* 6 Round Draft Tracker System Matrix */
+        .rounds-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .round-card {
+            background: #111;
+            border: 1px solid #252525;
+            border-radius: 6px;
+            padding: 15px;
+        }
+        .round-card h4 {
+            margin: 0 0 15px 0;
+            color: #000;
+            background: #ffcc00;
+            text-align: center;
+            padding: 6px;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            border-radius: 4px;
+        }
+        .round-card ol { padding-left: 20px; margin: 0; }
+        .round-card li {
+            font-family: 'Arial', sans-serif;
+            font-size: 0.95rem;
+            padding: 8px 0;
+            border-bottom: 1px solid #222;
+        }
+
+        /* Table Configurations */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            font-family: 'Arial', sans-serif;
+        }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #222; }
+        th {
+            background-color: #1a1a1a;
+            color: #ffcc00;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-family: 'Arial Black', sans-serif;
+        }
+        tbody tr:hover { background-color: #1c1c1c; }
+
+        /* Standings Matrices Setup */
+        .standings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        .group-container h4 {
+            margin: 15px 0 10px 0;
+            color: #ffcc00;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            border-left: 3px solid #ffcc00;
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="stadium-entrance">
+        <div class="tunnel-lights">🏟️</div>
+        <button class="entrance-btn" onclick="exitLocker Room()">Enter The Stadium</button>
+    </div>
+
+    <div class="ticker-wrap">
+        <div class="ticker">
+            🐐 PLAY LIKE A GOAT • THE GOATS PLAY HERE • CAN’T STOP THE BAA • DOWNTOWN SPORTS NETWORK OVERDRIVE 🐐
+        </div>
+    </div>
+
+    <header>
+        <h1>Downtown Sports <span>Network</span></h1>
+        <div class="tagline">The GOAT Standard. Dispute the Rest.</div>
+    </header>
+
+    <div class="main-layout">
+        
+        <div style="display: flex; flex-direction: column; gap: 35px;">
+            
+            <div class="card">
+                <h3>6-Round Network Draft Room</h3>
+                
+                <div class="interactive-panel">
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Manager Draft Order Option</label>
+                            <select id="manager-select">
+                                <option value="Evan Mandel">Evan Mandel</option>
+                                <option value="Adam Brown">Adam Brown</option>
+                                <option value="Manager 3">Manager 3</option>
+                                <option value="Manager 4">Manager 4</option>
+                                <option value="Manager 5">Manager 5</option>
+                                <option value="Manager 6">Manager 6</option>
+                                <option value="Manager 7">Manager 7</option>
+                                <option value="Manager 8">Manager 8</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-field">
+                            <label>Available Free Agent Teams</label>
+                            <select id="team-select" style="min-width: 240px;">
+                                </select>
+                        </div>
+                        
+                        <button id="draft-btn" class="btn" onclick="executeDraftPick()">Lock Pick</button>
+                    </div>
+                    <div style="text-align: right; margin-top: 15px;">
+                        <button class="btn btn-danger" onclick="clearDraftCache()">Wipe Draft History</button>
+                    </div>
+                </div>
+
+                <div id="draft-status" class="status-tracker">Loading draft board state...</div>
+
+                <div class="rounds-grid">
+                    <div class="round-card">
+                        <h4>Round 1</h4>
+                        <ol id="round1-list"></ol>
+                    </div>
+                    <div class="round-card">
+                        <h4>Round 2</h4>
+                        <ol id="round2-list"></ol>
+                    </div>
+                    <div class="round-card">
+                        <h4>Round 3</h4>
+                        <ol id="round3-list"></ol>
+                    </div>
+                    <div class="round-card">
+                        <h4>Round 4</h4>
+                        <ol id="round4-list"></ol>
+                    </div>
+                    <div class="round-card">
+                        <h4>Round 5</h4>
+                        <ol id="round5-list"></ol>
+                    </div>
+                    <div class="round-card">
+                        <h4>Round 6</h4>
+                        <ol id="round6-list"></ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>World Cup Standings Matrix</h3>
+                <div class="standings-grid">
+                    
+                    <div class="group-container">
+                        <h4>Group A</h4>
+                        <table>
+                            <thead><tr><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                            <tbody id="group-A-rows">
+                                <tr data-team="Mexico"><td>Mexico</td><td class="w">0</td><td class="l">0</td><td class="pts">0</td></tr>
+                                <tr data-team="South Korea"><td>South Korea</td><td class="w">0</td><td class="l">0</td><td class="pts">0</td></tr>
+                                <tr data-team="South Africa"><td>South Africa</td><td class="w">0</td><td class="l">0</td><td class="pts">0</td></tr>
+                                <tr data-team="Czech Republic"><td>Czech Republic</td><td class="w">0</td><td class="l">0</td><td class="pts">0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="group-container">
+                        <h4>Group B</h4>
+                        <table>
+                            <thead><tr><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                            <tbody id="group-B-rows">
+                                <tr data-team="Switzerland"><td>Switzerland</td><td class="w">0</td><td class="l">0</td><td class="pts">0</td></tr>
+                                <tr data-team="Canada"><td>Canada</td><td class="w">0</td><td class="l">0</td><td class="pts">0</td></tr>
+                                <tr data-team="Qatar"><td>Qatar</td><td class="w">0</td><td class="l">0</td><td class="pts">0</td></tr>
+                                <tr data-team="Bosnia &amp; Herz."><td>Bosnia &amp; Herz.</td><td class="w">0</td><td class="l">0</td><td class="pts">0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="group-container">
+                        <h4>Group C</h4>
+                        <table>
+                            <thead><tr><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                            <tbody id="group-C-rows">
+                                <tr data-team="Brazil"><td>Brazil</td><td class="w">0</td><td class="l">0</td><td class="pts">0</td></tr>
+                                <tr data-team="Morocco"><td>Morocco</td><td class="w">0</td><td class="l">0</td><td class="pts">0</td></tr>
+                                <tr data-team="Scotland"><td>Scotland</td><td class="w">0</td><td class="l">0</td><td class="pts">0</td></tr>
+                                <tr data-team="Haiti"><td>Haiti</td><td class="w">0</td><td class="l">0</td><td class="pts">0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="group-container">
+                        <h4>Group D</h4>
+                        <table>
+                            <thead><tr><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                            <tbody id="group-D-rows">
+                                <tr data-team="USA"><td>USA</td><td class="w">0</td><td class="l">0</td><td class="pts">0</td></tr>
+                                <tr data-team="Australia"><td>Australia</td><td class="w">0</td><td class="l">0</td><td class="pts">0</td></tr>
+                                <tr data-team="Paraguay"><td>Paraguay</td><td class="w">0</td><td class="l">0</td><td class="pts">0</td></tr>
+                                <tr data-team="Turkey"><td>Turkey</td><td class="w">0</td><td class="l">0</td><td class="pts">0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 35px;">
+            
+            <div class="card">
+                <h3>Commissioner Scoring Input</h3>
+                <div class="interactive-panel" style="background:#1a1a1a;">
+                    <div style="display:flex; flex-direction:column; gap:15px;">
+                        
+                        <div class="form-field">
+                            <label>Target Team</label>
+                            <select id="score-team-select">
+                                </select>
+                        </div>
+
+                        <div class="form-field">
+                            <label>Match Outcome Rule</label>
+                            <select id="score-outcome-select">
+                                <option value="reg-win">Regulation Win (+3 PTS)</option>
+                                <option value="ot-win">Overtime Win (+2 PTS)</option>
+                                <option value="so-win">Shootout Win (+1 PTS)</option>
+                                <option value="loss">Loss (+0 PTS)</option>
+                            </select>
+                        </div>
+
+                        <button class="btn" style="width:100%;" onclick="submitMatchScore()">Post Match Score</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Master Scoring Parameters</h3>
+                <div style="padding:10px 0; border-bottom:1px solid #333; font-family:sans-serif;">🏁 Regulation Win: <strong>3 PTS</strong></div>
+                <div style="padding:10px 0; border-bottom:1px solid #333; font-family:sans-serif;">⏱️ Overtime Win (OT): <strong>2 PTS</strong></div>
+                <div style="padding:10px 0; border-bottom:1px solid #333; font-family:sans-serif;">🎯 Shootout Win (SO): <strong>1 PTS</strong></div>
+            </div>
+
+            <div class="card">
+                <h3>Network Leaderboard</h3>
+                <table>
+                    <thead>
+                        <tr><th>Rank</th><th>Manager</th><th>PTS</th></tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                        </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Exit Tunnel Locker Room Scene trigger
+        function exitLockerRoom() {
+            const screen = document.getElementById('stadium-entrance');
+            screen.style.opacity = '0';
+            setTimeout(() => { screen.style.visibility = 'hidden'; }, 1500);
+        }
+
+        // Target Global Real Manager Identity Setup Arrays
+        const networkManagers = [
+            "Evan Mandel", "Adam Brown", "Manager 3", "Manager 4", 
+            "Manager 5", "Manager 6", "Manager 7", "Manager 8"
+        ];
+
+        const baseLeagueTeams = [
+            "Mexico", "South Korea", "South Africa", "Czech Republic",
+            "Switzerland", "Canada", "Qatar", "Bosnia & Herz.",
+            "Brazil", "Morocco", "Scotland", "Haiti",
+            "USA", "Australia", "Paraguay", "Turkey"
+        ].sort();
+
+        // Build Multi-Round Linear Snake Sequences Array (6 Rounds * 8 Managers = 48 Total Picks)
+        const totalRounds = 6;
+        let completeDraftOrder = [];
+
+        for (let r = 1; r <= totalRounds; r++) {
+            let iterationRoundList = [...networkManagers];
+            if (r % 2 === 0) { iterationRoundList.reverse(); } // Snake Twist
+            completeDraftOrder.push(...iterationRoundList);
+        }
+
+        // Memory Cache State Load Tracking Hooks
+        let currentPickIndex = 0;
+        let draftRegistry = {}; // Format: { pickIndex: { manager: X, team: Y } }
+        let teamPerformanceData = {}; // Format: { teamName: { w: X, l: Y, pts: Z } }
+
+        // Core Init Setup Function
+        window.onload = function() {
+            if (localStorage.getItem('downtownDraftRegistry')) {
+                draftRegistry = JSON.parse(localStorage.getItem('downtownDraftRegistry'));
+                currentPickIndex = Object.keys(draftRegistry).length;
+            }
+            if (localStorage.getItem('downtownPerformanceCache')) {
+                teamPerformanceData = JSON.parse(localStorage.getItem('downtownPerformanceCache'));
+            } else {
+                baseLeagueTeams.forEach(t => { teamPerformanceData[t] = { w: 0, l: 0, pts: 0 }; });
+            }
+
+            refreshDraftSelectors();
+            renderDraftBoardGrid();
+            syncStandingsUI();
+            calculateLeaderboard();
+        };
+
+        function refreshDraftSelectors() {
+            const teamDropdown = document.getElementById('team-select');
+            const scoreDropdown = document.getElementById('score-team-select');
+            
+            teamDropdown.innerHTML = '';
+            scoreDropdown.innerHTML = '';
+
+            const selectedTeams = Object.values(draftRegistry).map(obj => obj.team);
+
+            baseLeagueTeams.forEach(team => {
+                // Populate interactive draft list with remaining open teams
+                if (!selectedTeams.includes(team)) {
+                    let opt = document.createElement('option');
+                    opt.value = team; opt.textContent = team;
+                    teamDropdown.appendChild(opt);
+                }
+                // Admin Scoring Control list gets all teams
+                let optScore = document.createElement('option');
+                optScore.value = team; optScore.textContent = team;
+                scoreDropdown.appendChild(optScore);
+            });
+        }
+
+        function renderDraftBoardGrid() {
+            for (let i = 1; i <= totalRounds; i++) {
+                document.getElementById(`round${i}-list`).innerHTML = '';
+            }
+
+            completeDraftOrder.forEach((manager, idx) => {
+                const roundIndexNum = Math.floor(idx / networkManagers.length) + 1;
+                const parentList = document.getElementById(`round${roundIndexNum}-list`);
+                
+                let li = document.createElement('li');
+                if (draftRegistry[idx]) {
+                    li.innerHTML = `<strong>${draftRegistry[idx].manager}:</strong> <span style="color:#ffcc00;">${draftRegistry[idx].team}</span>`;
+                } else {
+                    li.innerHTML = `<span style="opacity:0.25;">${manager}</span>`;
+                }
+                parentList.appendChild(li);
+            });
+
+            // Update Header Tracking Output Displays
+            const statusBox = document.getElementById('draft-status');
+            const managerDropdown = document.getElementById('manager-select');
+
+            if (currentPickIndex >= completeDraftOrder.length) {
+                statusBox.textContent = "🏆 DRAFT CONCLUDED - BOARD IS LOCKED.";
+                document.getElementById('draft-btn').disabled = true;
+            } else {
+                const nextActiveManager = completeDraftOrder[currentPickIndex];
+                const activeRound = Math.floor(currentPickIndex / networkManagers.length) + 1;
+                const activePick = (currentPickIndex % networkManagers.length) + 1;
+                
+                statusBox.textContent = `⚡ PICK WINDOW: Round ${activeRound}, Pick ${activePick} ➔ ${nextActiveManager} is on the clock!`;
+                managerDropdown.value = nextActiveManager;
+            }
+        }
+
+        function executeDraftPick() {
+            const teamDropdown = document.getElementById('team-select');
+            const targetTeam = teamDropdown.value;
+            if (!targetTeam) return;
+
+            const activeManager = completeDraftOrder[currentPickIndex];
+            
+            draftRegistry[currentPickIndex] = { manager: activeManager, team: targetTeam };
+            currentPickIndex++;
+
+            localStorage.setItem('downtownDraftRegistry', JSON.stringify(draftRegistry));
+            
+            refreshDraftSelectors();
+            renderDraftBoardGrid();
+            calculateLeaderboard();
+        }
+
+        function submitMatchScore() {
+            const targetTeam = document.getElementById('score-team-select').value;
+            const outcomeRule = document.getElementById('score-outcome-select').value;
+
+            if (outcomeRule === "reg-win") {
+                teamPerformanceData[targetTeam].w += 1;
+                teamPerformanceData[targetTeam].pts += 3;
+            } else if (outcomeRule === "ot-win") {
+                teamPerformanceData[targetTeam].w += 1;
+                teamPerformanceData[targetTeam].pts += 2;
+            } else if (outcomeRule === "so-win") {
+                teamPerformanceData[targetTeam].w += 1;
+                teamPerformanceData[targetTeam].pts += 1;
+            } else if (outcomeRule === "loss") {
+                teamPerformanceData[targetTeam].l += 1;
+            }
+
+            localStorage.setItem('downtownPerformanceCache', JSON.stringify(teamPerformanceData));
+            syncStandingsUI();
+            calculateLeaderboard();
+        }
+
+        function syncStandingsUI() {
+            Object.keys(teamPerformanceData).forEach(team => {
+                const tr = document.querySelector(`tr[data-team="${team}"]`);
+                if (tr) {
+                    tr.querySelector('.w').textContent = teamPerformanceData[team].w;
+                    tr.querySelector('.l').textContent = teamPerformanceData[team].l;
+                    tr.querySelector('.pts').textContent = teamPerformanceData[team].pts;
+                }
+            });
+            
+            // Auto Sort Group Matrices Logic based on updated performance point calculations
+            ["A", "B", "C", "D"].forEach(letter => {
+                const tbody = document.getElementById(`group-${letter}-rows`);
+                let structuralRows = Array.from(tbody.querySelectorAll('tr'));
+                
+                structuralRows.sort((x, y) => {
+                    return parseInt(y.querySelector('.pts').textContent) - parseInt(x.querySelector('.pts').textContent);
+                });
+                structuralRows.forEach(row => tbody.appendChild(row));
+            });
+        }
+
+        function calculateLeaderboard() {
+            let managerPointMatrix = {};
+            networkManagers.forEach(m => managerPointMatrix[m] = 0);
+
+            // Connect drafted teams directly to manager scorecard point systems
+            Object.values(draftRegistry).forEach(pick => {
+                if (teamPerformanceData[pick.team]) {
+                    managerPointMatrix[pick.manager] += teamPerformanceData[pick.team].pts;
+                }
+            });
+
+            // Format data into table objects
+            let sortingBoard = Object.keys(managerPointMatrix).map(m => {
+                return { name: m, points: managerPointMatrix[m] };
+            });
+
+            sortingBoard.sort((x, y) => y.points - x.points);
+
+            const displayTableBody = document.getElementById('leaderboard-body');
+            displayTableBody.innerHTML = '';
+
+            sortingBoard.forEach((managerObj, rankIdx) => {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `<td>${rankIdx + 1}</td><td>${managerObj.name}</td><td><strong>${managerObj.points}</strong></td>`;
+                displayTableBody.appendChild(tr);
+            });
+        }
+
+        function clearDraftCache() {
+            if (confirm("Reset layout? All drafted configurations will clear out completely.")) {
+                localStorage.removeItem('downtownDraftRegistry');
+                localStorage.removeItem('downtownPerformanceCache');
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>

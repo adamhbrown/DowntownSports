@@ -1,67 +1,82 @@
-
-
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Downtown Sports Network | 2026 World Cup Shootout</title>
+<title>DSN | THE GOAT STANDARD</title>
 <style>
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background-color: #f4f4f9; color: #333; margin: 0; padding: 20px; }
-header { background: #1a1a2e; color: #fff; padding: 2rem; text-align: center; border-radius: 8px; margin-bottom: 20px; }
-h1 { margin: 0; text-transform: uppercase; letter-spacing: 2px; }
-.container { max-width: 1000px; margin: auto; }
-section { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-h2 { color: #1a1a2e; border-bottom: 2px solid #e74c3c; padding-bottom: 10px; }
-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
-th { background-color: #f8f8f8; }
-.scoring-recap { font-size: 0.9rem; }
+:root { --red: #d50000; --gold: #ffd700; --dark: #0a0a0a; --surface: #1a1a1a; --text: #ffffff; }
+body { font-family: 'Roboto Condensed', sans-serif; background-color: var(--dark); color: var(--text); margin: 0; padding-bottom: 60px; }
+
+/* Header */
+header { background: linear-gradient(to bottom, #000, var(--surface)); padding: 30px; border-bottom: 5px solid var(--red); text-align: center; }
+.brand { font-size: 2.5rem; font-weight: 900; color: var(--red); text-transform: uppercase; letter-spacing: 4px; }
+.slogan { color: var(--gold); font-style: italic; font-size: 1rem; }
+
+.container { max-width: 1000px; margin: 20px auto; padding: 20px; }
+.card { background: var(--surface); padding: 20px; border-radius: 8px; border-top: 4px solid var(--red); margin-bottom: 20px; }
+h2 { color: var(--red); text-transform: uppercase; font-size: 1.2rem; margin-bottom: 15px; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th { background: var(--red); color: white; padding: 10px; text-transform: uppercase; font-size: 0.7rem; text-align: left; }
+td { padding: 10px; border-bottom: 1px solid #333; }
+
+/* Ticker */
+.ticker-wrap { position: fixed; bottom: 0; width: 100%; background: #000; color: var(--gold); padding: 10px; border-top: 2px solid var(--red); overflow: hidden; white-space: nowrap; box-sizing: border-box; }
+.ticker { display: inline-block; animation: scroll 20s linear infinite; }
+@keyframes scroll { 0% { transform: translate(100%, 0); } 100% { transform: translate(-100%, 0); } }
 </style>
 </head>
 <body>
 
-<div class="container">
 <header>
-<h1>Downtown Sports Network</h1>
-<p>2026 World Cup Shootout Official Standings</p>
+<div class="brand">DOWNTOWN SPORTS NETWORK</div>
+<div class="slogan">THE GOAT STANDARD. DISPUTE THE REST.</div>
 </header>
 
-<section>
-<h2>Scoring Recap</h2>
-<table class="scoring-recap">
-<tr><th>Round</th><th>Scoring Format (Reg - OT - SO)</th></tr>
-<tr><td>Group Play</td><td>3 pts for Win, 1 pt for Tie</td></tr>
-<tr><td>Round of 32</td><td>4 - 3 - 2</td></tr>
-<tr><td>Round of 16</td><td>5 - 4 - 3</td></tr>
-<tr><td>Quarterfinals</td><td>6 - 5 - 4</td></tr>
-<tr><td>Semifinals</td><td>7 - 6 - 5</td></tr>
-<tr><td>3rd Place Game</td><td>3 - 2 - 1</td></tr>
-<tr><td>Championship</td><td>8 - 7 - 6</td></tr>
+<div class="container">
+<!-- NHL Standings -->
+<section class="card">
+<h2>League Standings</h2>
+<table>
+<tr><th>Participant</th><th>PTS</th><th>REC</th></tr>
+<tr><td>Evan Mandel</td><td>25</td><td>10-4</td></tr>
+<tr><td>Josh Drumm</td><td>24</td><td>10-4</td></tr>
+<tr><td>Dominic Lippa III</td><td>10</td><td>6-8</td></tr>
 </table>
 </section>
 
-<section>
-<h2>Group Standings</h2>
-<h3>Group A</h3>
+<!-- Analytics Grid -->
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+<section class="card">
+<h2>Championship Scenarios</h2>
 <table>
-<tr><th>Franchise</th><th>Record</th><th>Scored</th><th>Allowed</th><th>Diff</th></tr>
-<tr><td>MEXICO</td><td>0-0</td><td>0</td><td>0</td><td>0</td></tr>
-<tr><td>SOUTH KOREA</td><td>0-0</td><td>0</td><td>0</td><td>0</td></tr>
-<tr><td>SOUTH AFRICA</td><td>0-0</td><td>0</td><td>0</td><td>0</td></tr>
-<tr><td>CZECH REPUBLIC</td><td>0-0</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><th>Result</th><th>Champion</th></tr>
+<tr><td>CANES 6</td><td>Josh Drumm</td></tr>
+<tr><td>CANES 7</td><td>Darryl S</td></tr>
+<tr><td>KNIGHTS 5</td><td>Evan M</td></tr>
 </table>
 </section>
-
-<section>
-<h2>Golden Boot Race</h2>
+<section class="card">
+<h2>Top Scorers (Knights)</h2>
 <table>
-<tr><th>Goals</th><th>Country</th><th>Player Name</th><th>Franchise</th></tr>
-<tr><td colspan="4">No goals recorded yet.</td></tr>
+<tr><th>Player</th><th>Goals</th></tr>
+<tr><td>Howden</td><td>13</td></tr>
+<tr><td>Marner</td><td>10</td></tr>
+<tr><td>Dorofeyev</td><td>10</td></tr>
 </table>
 </section>
 </div>
+</div>
 
+<div class="ticker-wrap">
+<div class="ticker">
+BREAKING: KNIGHTS DOMINATING PLAYOFFS | CANES CHASING HISTORY | DSN IS THE GOAT STANDARD | UPDATED LEAGUE STANDINGS LIVE | DISPUTE THE REST.
+</div>
+</div>
 </body>
 </html>
+
+```

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Where the Goats Play</title>
+<style>
+body { font-family: sans-serif; background-color: #f4f4f4; color: #333; margin: 0; padding: 20px; }
+header { background-color: #ff9800; color: white; padding: 20px; text-align: center; border-radius: 8px; }
+nav { margin: 20px 0; display: flex; gap: 10px; justify-content: center; }
+button { padding: 10px 20px; cursor: pointer; background: #03a9f4; color: white; border: none; border-radius: 4px; }
+.tab-content { display: none; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.active { display: block; }
+</style>
+</head>
+<body>
+
+<header>
+<h1>Where the Goats Play</h1>
+</header>
+
+<nav>
+<button onclick="showTab('draft')">Draft</button>
+<button onclick="showTab('standings')">Standings</button>
+<button onclick="showTab('scores')">Scores & Schedule</button>
+<button onclick="showTab('golden-boot')">Golden Boot</button>
+</nav>
+
+<div id="draft" class="tab-content active"><h2>Draft Board</h2><p>Snake draft tracking goes here.</p></div>
+<div id="standings" class="tab-content"><h2>League Standings</h2><p>Points tracking: 3 (Win), 2 (Overtime), 1 (Tie).</p></div>
+<div id="scores" class="tab-content"><h2>Scores & Schedule</h2><p>World Cup match results.</p></div>
+<div id="golden-boot" class="tab-content"><h2>Golden Boot Tracker</h2><p>Leading scorer stats.</p></div>
+
+<script>
+function showTab(tabId) {
+document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+document.getElementById(tabId).classList.add('active');
+}
+</script>
+
+</body>
+</html>

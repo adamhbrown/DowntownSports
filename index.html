@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downtown Sports Network</title>
+    <style>
+        /* Immersive Tunnel/Locker Room Entrance Video/Animation Framework */
+        #stadium-entrance {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle, #222 10%, #000 100%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.0s cubic-bezier(0.77, 0, 0.175, 1), visibility 1.0s;
+        }
+        .tunnel-lights {
+            font-size: 5rem;
+            animation: pulse-lights 1.5s infinite alternate;
+            margin-bottom: 20px;
+        }
+        @keyframes pulse-lights {
+            0% { text-shadow: 0 0 10px #fff, 0 0 20px #ffcc00; transform: scale(0.95); }
+            100% { text-shadow: 0 0 30px #fff, 0 0 60px #ffcc00; transform: scale(1.05); }
+        }
+        .entrance-btn {
+            background: linear-gradient(135deg, #ffcc00 0%, #ffaa00 100%);
+            color: #000;
+            font-family: 'Arial Black', sans-serif;
+            font-size: 1.8rem;
+            padding: 20px 40px;
+            border: 4px solid #fff;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.6);
+            border-radius: 8px;
+            letter-spacing: 2px;
+            transition: all 0.2s ease;
+        }
+        .entrance-btn:hover {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 1);
+        }
+
+        /* Base Configuration Theme */
+        body {
+            background-color: #0a0a0c;
+            color: #ffffff;
+            font-family: 'Arial Black', -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Running GOAT Slogan Ticker */
+        .ticker-wrap {
+            width: 100%;
+            background: linear-gradient(90deg, #ffcc00 0%, #ffaa00 50%, #ffcc00 100%);
+            color: #000000;
+            padding: 14px 0;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            border-bottom: 3px solid #fff;
+            box-shadow: 0 4px 20px rgba(255,204,0,0.2);
+        }
+        .ticker {
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker-move 30s linear infinite;
+        }
+        @keyframes ticker-move {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        /* Premium ESPN/FanDuel Style Branding */
+        header {
+            text-align: center;
+            padding: 50px 20px 30px 20px;
+            background: radial-gradient(circle at top, #1f1f25 0%, #0d0d11 100%);
+            position: relative;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 4rem;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            text-shadow: 3px 3px 0px #000;
+        }
+        header h1 span { color: #ffcc00; text-shadow: 3px 3px 0px #000, 0 0 20px rgba(255,204,0,0.4); }
+        header .tagline {
+            font-family: 'Arial', sans-serif;
+            color: #aaa;
+            font-size: 1.3rem;
+            margin-top: 12px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-weight: bold;
+        }
+
+        /* Nav Tab Bar Framework */
+        .tab-bar {
+            display: flex;
+            justify-content: center;
+            background: #121216;
+            border-top: 1px solid #23232e;
+            border-bottom: 4px solid #ffcc00;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        .tab-btn {
+            background: transparent;
+            color: #8e8e9f;
+            border: none;
+            padding: 18px 35px;
+            font-family: 'Arial Black', sans-serif;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .tab-btn:hover { color: #fff; background: #191921; }
+        .tab-btn.active { color: #000; background: #ffcc00; font-weight: 900; }
+
+        /* Main Screen Layout Components */
+        .main-layout {
+            max-width: 1650px;
+            margin: 0 auto;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        @media (min-width: 1200px) {
+            .main-layout { grid-template-columns: 2.2fr 1fr; }
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .card {
+            background: linear-gradient(145deg, #16161c 0%, #111115 100%);
+            border: 1px solid #23232e;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .card h3 {
+            margin-top: 0;
+            text-transform: uppercase;
+            border-bottom: 3px solid #ffcc00;
+            padding-bottom: 15px;
+            font-size: 1.8rem;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Complete Controls Layer */
+        .interactive-panel {
+            background: rgba(32, 32, 42, 0.6);
+            border: 1px solid #2c2c3d;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-end;
+        }
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-grow: 1;
+            min-width: 180px;
+        }
+        .form-field label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: #ffcc00;
+            letter-spacing: 1.5px;
+        }
+        select, input {
+            background: #09090c;
+            color: #fff;
+            border: 2px solid #323246;
+            padding: 14px;
+            font-size: 1rem;
+            border-radius: 8px;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            box-sizing: border-box;
+            transition: all 0.2s;
+        }
+        select:focus, input:focus { border-color: #ffcc00; box-shadow: 0 0 10px rgba(255,204,0,0.2); outline: none; }
+        
+        .btn {
+            background: linear-gradient(135deg, #ffcc00 0%, #ffaa00 100%);
+            color: #000;
+            font-weight: bold;
+            border: none;
+            padding: 16px 32px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 8px;
+            text-transform: uppercase;
+            font-family: 'Arial Black', sans-serif;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(255,204,0,0.2);
+        }
+        .btn:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,255,255,0.2); }
+        .btn:disabled { background: #222; color: #555; cursor: not-allowed; transform: none; box-shadow: none; }
+        .btn-danger { background: linear-gradient(135deg, #cc3333 0%, #992222 100%); color: white; padding: 10px 20px; font-size: 0.85rem; box-shadow: none; }
+        .btn-danger:hover { background: #ff4444; }
+        .btn-rand { background: linear-gradient(135deg, #0088cc 0%, #0066aa 100%); color: #fff; padding: 16px 24px; box-shadow: none; }
+        .btn-rand:hover { background: #00aaff; }
+
+        .status-tracker {
+            background: #09090c;
+            padding: 18px;
+            border-left: 6px solid #ffcc00;
+            font-family: monospace;
+            font-size: 1.15rem;
+            color: #ffcc00;
+            margin-bottom: 30px;
+            border-radius: 0 12px 12px 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        /* 6 Round Draft Tracker System Matrix */
+        .rounds-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+        .round-card {
+            background: #0e0e12;
+            border: 1px solid #1f1f28;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .round-card h4 {
+            margin: 0 0 15px 0;
+            color: #000;
+            background: #ffcc00;
+            text-align: center;
+            padding: 8px;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(255,204,0,0.2);
+        }
+        .round-card ol { padding-left: 20px; margin: 0; }
+        .round-card li {
+            font-family: 'Arial', sans-serif;
+            font-size: 0.95rem;
+            padding: 10px 0;
+            border-bottom: 1px solid #1a1a24;
+            transition: all 0.2s;
+        }
+        .round-card li.active-pick-neon {
+            border: 2px solid #ffcc00;
+            background: rgba(255, 204, 0, 0.05);
+            border-radius: 6px;
+            padding: 10px;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.2);
+            animation: pulse-border 1s infinite alternate;
+        }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 5px rgba(255, 204, 0, 0.2); }
+            100% { box-shadow: 0 0 15px rgba(255, 204, 0, 0.5); }
+        }
+
+        /* Table Configurations */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            font-family: 'Arial', sans-serif;
+        }
+        th, td { padding: 14px; text-align: left; border-bottom: 1px solid #1f1f28; }
+        th {
+            background-color: #121217;
+            color: #ffcc00;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-family: 'Arial Black', sans-serif;
+            letter-spacing: 0.5px;
+        }
+        tbody tr:hover { background-color: #171721; }
+
+        /* Custom Visual Stat Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-align: center;
+            min-width: 25px;
+        }
+        .badge-w { background: rgba(0, 204, 136, 0.15); color: #00cc88; border: 1px solid rgba(0, 204, 136, 0.3); }
+        .badge-l { background: rgba(255, 68, 68, 0.15); color: #ff4444; border: 1px solid rgba(255, 68, 68, 0.3); }
+        .badge-pts { background: rgba(255, 204, 0, 0.15); color: #ffcc00; border: 1px solid rgba(255, 204, 0, 0.3); }
+
+        /* Standings Matrices Setup */
+        .standings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+            gap: 30px;
+        }
+        .group-container h4 {
+            margin: 20px 0 12px 0;
+            color: #ffcc00;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            border-left: 4px solid #ffcc00;
+            padding-left: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Golden Boot Special Showcase UI */
+        .boot-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: linear-gradient(90deg, rgba(255,204,0,0.1) 0%, rgba(0,0,0,0) 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px dashed rgba(255,204,0,0.3);
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="stadium-entrance">
+        <div class="tunnel-lights">🏟️</div>
+        <button class="entrance-btn" onclick="exitLockerRoom()">Enter The Stadium</button>
+    </div>
+
+    <div class="ticker-wrap">
+        <div class="ticker">
+            🐐 PLAY LIKE A GOAT • THE GOATS PLAY HERE • CAN’T STOP THE BAA • DOWNTOWN SPORTS NETWORK OVERDRIVE 🐐
+        </div>
+    </div>
+
+    <header>
+        <h1>Downtown Sports <span>Network</span></h1>
+        <div class="tagline">The GOAT Standard. Can't Stop The Baa.</div>
+    </header>
+
+    <nav>
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab('tournament-hub', this)">League Dashboard</button>
+            <button class="tab-btn" onclick="switchTab('golden-boot-hub', this)">Golden Boot Tracker</button>
+        </div>
+    </nav>
+
+    <div class="main-layout">
+        
+        <div>
+            <div id="tournament-hub" class="tab-content active">
+                
+                <div class="card">
+                    <h3>📋 6-Round Network Draft Room</h3>
+                    
+                    <div class="interactive-panel">
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label>Manager Selection Track</label>
+                                <select id="manager-select">
+                                    <option value="Adam Brown">Adam Brown</option>
+                                    <option value="Darryl Slater">Darryl Slater</option>
+                                    <option value="Matt Rybaltowski">Matt Rybaltowski</option>
+                                    <option value="Justin Mullen">Justin Mullen</option>
+                                    <option value="Rome Leykin">Rome Leykin</option>
+                                    <option value="Rebecca Tredenari">Rebecca Tredenari</option>
+                                    <option value="Chris Lippa">Chris Lippa</option>
+                                    <option value="Josh Drumm">Josh Drumm</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-field">
+                                <label>Available Free Agent Teams</label>
+                                <select id="team-select" style="min-width: 240px;">
+                                    </select>
+                            </div>
+                            
+                            <button id="draft-btn" class="btn" onclick="executeDraftPick()">Lock Pick</button>
+                            <button id="randomize-btn" class="btn btn-rand" onclick="randomizeDraftOrder()">Shuffle Board</button>
+                        </div>
+                        <div style="text-align: right; margin-top: 15px;">
+                            <button class="btn btn-danger" onclick="clearDraftCache()">Wipe Draft History</button>
+                        </div>
+                    </div>
+
+                    <div id="draft-status" class="status-tracker">Loading draft board state...</div>
+
+                    <div class="rounds-grid">
+                        <div class="round-card"><h4>Round 1</h4><ol id="round1-list"></ol></div>
+                        <div class="round-card"><h4>Round 2</h4><ol id="round2-list"></ol></div>
+                        <div class="round-card"><h4>Round 3</h4><ol id="round3-list"></ol></div>
+                        <div class="round-card"><h4>Round 4</h4><ol id="round4-list"></ol></div>
+                        <div class="round-card"><h4>Round 5</h4><ol id="round5-list"></ol></div>
+                        <div class="round-card"><h4>Round 6</h4><ol id="round6-list"></ol></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>📊 World Cup Standings Matrix</h3>
+                    <div class="standings-grid">
+                        <div class="group-container">
+                            <h4>Group A</h4>
+                            <table>
+                                <thead><tr><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                                <tbody id="group-A-rows">
+                                    <tr data-team="Mexico"><td>Mexico</td><td><span class="badge badge-w w">0</span></td><td><span class="badge badge-l l">0</span></td><td><span class="badge badge-pts pts">0</span></td></tr>
+                                    <tr data-team="South Korea"><td>South Korea</td><td><span class="badge badge-w w">0</span></td><td><span class="badge badge-l l">0</span></td><td><span class="badge badge-pts pts">0</span></td></tr>
+                                    <tr data-team="South Africa"><td>South Africa</td><td><span class="badge badge-w w">0</span></td><td><span class="badge badge-l l">0</span></td><td><span class="badge badge-pts pts">0</span></td></tr>
+                                    <tr data-team="Czech Republic"><td>Czech Republic</td><td><span class="badge badge-w w">0</span></td><td><span class="badge badge-l l">0</span></td><td><span class="badge badge-pts pts">0</span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="group-container">
+                            <h4>Group B</h4>
+                            <table>
+                                <thead><tr><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                                <tbody id="group-B-rows">
+                                    <tr data-team="Switzerland"><td>Switzerland</td><td><span class="badge badge-w w">0</span></td><td><span class="badge badge-l l">0</span></td><td><span class="badge badge-pts pts">0</span></td></tr>
+                                    <tr data-team="Canada"><td>Canada</td><td><span class="badge badge-w w">0</span></td><td><span class="badge badge-l l">0</span></td><td><span class="badge badge-pts pts">0</span></td></tr>
+                                    <tr data-team="Qatar"><td>Qatar</td><td><span class="badge badge-w w">0</span></td><td><span class="badge badge-l l">0</span></td><td><span class="badge badge-pts pts">0</span></td></tr>
+                                    <tr data-team="Bosnia &amp; Herz."><td>Bosnia &amp; Herz.</td><td><span class="badge badge-w w">0</span></td><td><span class="badge badge-l l">0</span></td><td><span class="badge badge-pts pts">0</span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="group-container">
+                            <h4>Group C</h4>
+                            <table>
+                                <thead><tr><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                                <tbody id="group-C-rows">
+                                    <tr data-team="Brazil"><td>Brazil</td><td><span class="badge badge-w w">0</span></td><td><span class="badge badge-l l">0</span></td><td><span class="badge badge-pts pts">0</span></td></tr>
+                                    <tr data-team="Morocco"><td>Morocco</td><td><span class="badge badge-w w">0</span></td><td><span class="badge badge-l l">0</span></td><td><span class="badge badge-pts pts">0</span></td></tr>
+                                    <tr data-team="Scotland"><td>Scotland</td><td><span class="badge badge-w w">0</span></td><td><span class="badge badge-l l">0</span></td><td><span class="badge badge-pts pts">0</span></td></tr>
+                                    <tr data-team="Haiti"><td>Haiti</td><td><span class="badge badge-w w">0</span></td><td><span class="badge badge-l l">0</span></td><td><span class="badge badge-pts pts">0</span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="group-container">
+                            <h4>Group D</h4>
+                            <table>
+                                <thead><tr><th>Team</th><th>W</th><th>L</th><th>PTS</th></tr></thead>
+                                <tbody id="group-D-rows">
+                                    <tr data-team="USA"><td>USA</td><td><span class="badge badge-w w">0</span></td><td><span class="badge badge-l l">0</span></td><td><span class="badge badge-pts pts">0</span></td></tr>
+                                    <tr data-team="Australia"><td>Australia</td><td><span class="badge badge-w w">0</span></td><td><span class="badge badge-l l">0</span></td><td><span class="badge badge-pts pts">0</span></td></tr>
+                                    <tr data-team="Paraguay"><td>Paraguay</td><td><span class="badge badge-w w">0</span></td><td><span class="badge badge-l l">0</span></td><td><span class="badge badge-pts pts">0</span></td></tr>
+                                    <tr data-team="Turkey"><td>Turkey</td><td><span class="badge badge-w w">0</span></td><td><span class="badge badge-l l">0</span></td><td><span class="badge badge-pts pts">0</span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="golden-boot-hub" class="tab-content">
+                <div class="card">
+                    <div class="boot-header">
+                        <span style="font-size: 2.5rem;">👟</span>
+                        <h2 style="margin:0; border:none; text-transform:uppercase; color:#ffcc00; letter-spacing:-1px;">Golden Boot Administration</h2>
+                    </div>
+                    
+                    <div class="interactive-panel">
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label>Striker Name</label>
+                                <input type="text" id="boot-player-name" placeholder="e.g. Mbappé">
+                            </div>
+                            <div class="form-field">
+                                <label>Representing Country</label>
+                                <select id="boot-team-select">
+                                    </select>
+                            </div>
+                            <div class="form-field" style="max-width:120px;">
+                                <label>Goals Logged</label>
+                                <input type="number" id="boot-player-goals" value="0" min="0">
+                            </div>
+                            <button class="btn" onclick="submitGoldenBootStats()">Update Stats</button>
+                        </div>
+                    </div>
+
+                    <h3>🔥 Live Golden Boot Standings</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Rank</th><th>Striker</th><th>Country</th><th>Goals</th></tr>
+                        </thead>
+                        <tbody id="golden-boot-body">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 35px;">
+            
+            <div class="card">
+                <h3>👑 Commissioner Scoring Input</h3>
+                <div class="interactive-panel" style="background:#16161c;">
+                    <div style="display:flex; flex-direction:column; gap:15px;">
+                        <div class="form-field">
+                            <label>Target Team</label>
+                            <select id="score-team-select"></select>
+                        </div>
+                        <div class="form-field">
+                            <label>Match Outcome Rule</label>
+                            <select id="score-outcome-select">
+                                <option value="reg-win">Regulation Win (+3 PTS)</option>
+                                <option value="ot-win">Overtime Win (+2 PTS)</option>
+                                <option value="so-win">Shootout Win (+1 PTS)</option>
+                                <option value="loss">Loss (+0 PTS)</option>
+                            </select>
+                        </div>
+                        <button class="btn" style="width:100%;" onclick="submitMatchScore()">Post Match Score</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📋 Master Scoring Parameters</h3>
+                <div style="padding:12px 0; border-bottom:1px solid #23232e; font-family:sans-serif; color:#ddd;">🏁 Regulation Win: <strong style="color:#ffcc00;">3 PTS</strong></div>
+                <div style="padding:12px 0; border-bottom:1px solid #23232e; font-family:sans-serif; color:#ddd;">⏱️ Overtime Win (OT): <strong style="color:#ffcc00;">2 PTS</strong></div>
+                <div style="padding:12px 0; border-bottom:1px solid #23232e; font-family:sans-serif; color:#ddd;">🎯 Shootout Win (SO): <strong style="color:#ffcc00;">1 PTS</strong></div>
+            </div>
+
+            <div class="card">
+                <h3>🏆 Network Leaderboard</h3>
+                <table>
+                    <thead><tr><th>Rank</th><th>Manager</th><th>PTS</th></tr></thead>
+                    <tbody id="leaderboard-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function exitLockerRoom() {
+            const screen = document.getElementById('stadium-entrance');
+            screen.style.opacity = '0';
+            setTimeout(() => { screen.style.visibility = 'hidden'; }, 1000);
+        }
+
+        function switchTab(tabId, el) {
+            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            el.classList.add('active');
+        }
+
+        let networkManagers = [
+            "Adam Brown", "Darryl Slater", "Matt Rybaltowski", "Justin Mullen",
+            "Rome Leykin", "Rebecca Tredenari", "Chris Lippa", "Josh Drumm"
+        ];
+
+        const baseLeagueTeams = [
+            "Mexico", "South Korea", "South Africa", "Czech Republic",
+            "Switzerland", "Canada", "Qatar", "Bosnia & Herz.",
+            "Brazil", "Morocco", "Scotland", "Haiti",
+            "USA", "Australia", "Paraguay", "Turkey"
+        ].sort();
+
+        const totalRounds = 6;
+        let completeDraftOrder = [];
+
+        function compileSnakeSequence() {
+            completeDraftOrder = [];
+            for (let r = 1; r <= totalRounds; r++) {
+                let roundList = [...networkManagers];
+                if (r % 2 === 0) roundList.reverse();
+                completeDraftOrder.push(...roundList);
+            }
+        }
+
+        let currentPickIndex = 0;
+        let draftRegistry = {};
+        let teamPerformanceData = {};
+        let goldenBootRegistry = {};
+
+        window.onload = function() {
+            if (localStorage.getItem('downtownNetworkManagers')) {
+                networkManagers = JSON.parse(localStorage.getItem('downtownNetworkManagers'));
+            }
+            compileSnakeSequence();
+
+            if (localStorage.getItem('downtownDraftRegistry')) {
+                draftRegistry = JSON.parse(localStorage.getItem('downtownDraftRegistry'));
+                currentPickIndex = Object.keys(draftRegistry).length;
+            }
+            if (localStorage.getItem('downtownPerformanceCache')) {
+                teamPerformanceData = JSON.parse(localStorage.getItem('downtownPerformanceCache'));
+            } else {
+                baseLeagueTeams.forEach(t => { teamPerformanceData[t] = { w: 0, l: 0, pts: 0 }; });
+            }
+            if (localStorage.getItem('downtownGoldenBootCache')) {
+                goldenBootRegistry = JSON.parse(localStorage.getItem('downtownGoldenBootCache'));
+            }
+
+            refreshDraftSelectors();
+            renderDraftBoardGrid();
+            syncStandingsUI();
+            calculateLeaderboard();
+            renderGoldenBootStandings();
+        };
+
+        function randomizeDraftOrder() {
+            if (currentPickIndex > 0) {
+                alert("The draft has already begun. Shuffling is locked to protect selections.");
+                return;
+            }
+            for (let i = networkManagers.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [networkManagers[i], networkManagers[j]] = [networkManagers[j], networkManagers[i]];
+            }
+            localStorage.setItem('downtownNetworkManagers', JSON.stringify(networkManagers));
+            compileSnakeSequence();
+            refreshDraftSelectors();
+            renderDraftBoardGrid();
+        }
+
+        function refreshDraftSelectors() {
+            const teamDropdown = document.getElementById('team-select');
+            const scoreDropdown = document.getElementById('score-team-select');
+            const bootDropdown = document.getElementById('boot-team-select');
+            
+            teamDropdown.innerHTML = '';
+            scoreDropdown.innerHTML = '';
+            bootDropdown.innerHTML = '';
+
+            const selectedTeams = Object.values(draftRegistry).map(obj => obj.team);
+
+            baseLeagueTeams.forEach(team => {
+                if (!selectedTeams.includes(team)) {
+                    let opt = document.createElement('option');
+                    opt.value = team; opt.textContent = team;
+                    teamDropdown.appendChild(opt);
+                }
+                let optScore = document.createElement('option');
+                optScore.value = team; optScore.textContent = team;
+                scoreDropdown.appendChild(optScore);
+
+                let optBoot = document.createElement('option');
+                optBoot.value = team; optBoot.textContent = team;
+                bootDropdown.appendChild(optBoot);
+            });
+        }
+
+        function renderDraftBoardGrid() {
+            for (let i = 1; i <= totalRounds; i++) {
+                document.getElementById(`round${i}-list`).innerHTML = '';
+            }
+
+            completeDraftOrder.forEach((manager, idx) => {
+                const roundIndexNum = Math.floor(idx / networkManagers.length) + 1;
+                const parentList = document.getElementById(`round${roundIndexNum}-list`);
+                
+                let li = document.createElement('li');
+                if (draftRegistry[idx]) {
+                    li.innerHTML = `<strong>${draftRegistry[idx].manager}:</strong> <span style="color:#ffcc00;">${draftRegistry[idx].team}</span>`;
+                } else {
+                    li.innerHTML = `<span style="opacity:0.35;">${manager}</span>`;
+                }
+
+                if (idx === currentPickIndex) {
+                    li.classList.add('active-pick-neon');
+                    li.innerHTML = `⚡ <strong>${manager} (ON CLOCK)</strong>`;
+                }
+
+                parentList.appendChild(li);
+            });
+
+            const statusBox = document.getElementById('draft-status');
+            const managerDropdown = document.getElementById('manager-select');
+            const randBtn = document.getElementById('randomize-btn');
+
+            managerDropdown.innerHTML = '';
+            networkManagers.forEach(m => {
+                let opt = document.createElement('option');
+                opt.value = m; opt.textContent = m;
+                managerDropdown.appendChild(opt);
+            });
+
+            if (currentPickIndex >= completeDraftOrder.length) {
+                statusBox.textContent = "🏆 DRAFT CONCLUDED - BOARD IS LOCKED.";
+                document.getElementById('draft-btn').disabled = true;
+                if(randBtn) randBtn.disabled = true;
+            } else {
+                const nextActiveManager = completeDraftOrder[currentPickIndex];
+                const activeRound = Math.floor(currentPickIndex / networkManagers.length) + 1;
+                const activePick = (currentPickIndex % networkManagers.length) + 1;
+                
+                statusBox.textContent = `⚡ PICK WINDOW: Round ${activeRound}, Pick ${activePick} ➔ ${nextActiveManager} is on the clock!`;
+                managerDropdown.value = nextActiveManager;
+                if(currentPickIndex > 0 && randBtn) randBtn.disabled = true;
+            }
+        }
+
+        function executeDraftPick() {
+            const teamDropdown = document.getElementById('team-select');
+            const targetTeam = teamDropdown.value;
+            if (!targetTeam) return;
+
+            const activeManager = completeDraftOrder[currentPickIndex];
+            
+            draftRegistry[currentPickIndex] = { manager: activeManager, team: targetTeam };
+            currentPickIndex++;
+
+            localStorage.setItem('downtownDraftRegistry', JSON.stringify(draftRegistry));
+            
+            refreshDraftSelectors();
+            renderDraftBoardGrid();
+            calculateLeaderboard();
+        }
+
+        function submitMatchScore() {
+            const targetTeam = document.getElementById('score-team-select').value;
+            const outcomeRule = document.getElementById('score-outcome-select').value;
+
+            if (outcomeRule === "reg-win") {
+                teamPerformanceData[targetTeam].w += 1;
+                teamPerformanceData[targetTeam].pts += 3;
+            } else if (outcomeRule === "ot-win") {
+                teamPerformanceData[targetTeam].w += 1;
+                teamPerformanceData[targetTeam].pts += 2;
+            } else if (outcomeRule === "so-win") {
+                teamPerformanceData[targetTeam].w += 1;
+                teamPerformanceData[targetTeam].pts += 1;
+            } else if (outcomeRule === "loss") {
+                teamPerformanceData[targetTeam].l += 1;
+            }
+
+            localStorage.setItem('downtownPerformanceCache', JSON.stringify(teamPerformanceData));
+            syncStandingsUI();
+            calculateLeaderboard();
+        }
+
+        function syncStandingsUI() {
+            Object.keys(teamPerformanceData).forEach(team => {
+                const tr = document.querySelector(`tr[data-team="${team}"]`);
+                if (tr) {
+                    tr.querySelector('.w').textContent = teamPerformanceData[team].w;
+                    tr.querySelector('.l').textContent = teamPerformanceData[team].l;
+                    tr.querySelector('.pts').textContent = teamPerformanceData[team].pts;
+                }
+            });
+            
+            ["A", "B", "C", "D"].forEach(letter => {
+                const tbody = document.getElementById(`group-${letter}-rows`);
+                if (tbody) {
+                    let structuralRows = Array.from(tbody.querySelectorAll('tr'));
+                    structuralRows.sort((x, y) => {
+                        return parseInt(y.querySelector('.pts').textContent) - parseInt(x.querySelector('.pts').textContent);
+                    });
+                    structuralRows.forEach(row => tbody.appendChild(row));
+                }
+            });
+        }
+
+        function calculateLeaderboard() {
+            let managerPointMatrix = {};
+            networkManagers.forEach(m => managerPointMatrix[m] = 0);
+
+            Object.values(draftRegistry).forEach(pick => {
+                if (teamPerformanceData[pick.team]) {
+                    managerPointMatrix[pick.manager] += teamPerformanceData[pick.team].pts;
+                }
+            });
+
+            let sortingBoard = Object.keys(managerPointMatrix).map(m => {
+                return { name: m, points: managerPointMatrix[m] };
+            });
+
+            sortingBoard.sort((x, y) => y.points - x.points);
+
+            const displayTableBody = document.getElementById('leaderboard-body');
+            displayTableBody.innerHTML = '';
+
+            sortingBoard.forEach((managerObj, rankIdx) => {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `<td>${rankIdx + 1}</td><td>${managerObj.name}</td><td><span class="badge badge-pts"><strong>${managerObj.points}</strong></span></td>`;
+                displayTableBody.appendChild(tr);
+            });
+        }
+
+        function submitGoldenBootStats() {
+            const pName = document.getElementById('boot-player-name').value.trim();
+            const pTeam = document.getElementById('boot-team-select').value;
+            const pGoals = parseInt(document.getElementById('boot-player-goals').value) || 0;
+
+            if (!pName) {
+                alert("Please input a valid player identity name.");
+                return;
+            }
+
+            goldenBootRegistry[pName] = { team: pTeam, goals: pGoals };
+            localStorage.setItem('downtownGoldenBootCache', JSON.stringify(goldenBootRegistry));
+            renderGoldenBootStandings();
+        }
+
+        function renderGoldenBootStandings() {
+            const tbody = document.getElementById('golden-boot-body');
+            tbody.innerHTML = '';
+
+            let sortedStrikers = Object.keys(goldenBootRegistry).map(name => {
+                return { name: name, team: goldenBootRegistry[name].team, goals: goldenBootRegistry[name].goals };
+            });
+
+            sortedStrikers.sort((x, y) => y.goals - x.goals);
+
+            sortedStrikers.forEach((striker, index) => {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `<td>${index + 1}</td><td>${striker.name}</td><td>${striker.team}</td><td><span class="badge badge-pts"><strong>${striker.goals}</strong></span></td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function clearDraftCache() {
+            if (confirm("Reset layout? All drafted configurations and stats will clear out completely.")) {
+                localStorage.removeItem('downtownDraftRegistry');
+                localStorage.removeItem('downtownPerformanceCache');
+                localStorage.removeItem('downtownNetworkManagers');
+                localStorage.removeItem('downtownGoldenBootCache');
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,675 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 DSI World Cup Matrix</title>
+    <!-- Firebase Libraries for Live Real-Time Multi-Device Sync -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <style>
+        /* Immersive Tunnel Locker Room Entrance */
+        #stadium-entrance {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle, #0f172a 10%, #020617 100%); z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+        .tunnel-lights { font-size: 5rem; animation: pulse-lights 1.5s infinite alternate; margin-bottom: 20px; }
+        @keyframes pulse-lights {
+            0% { text-shadow: 0 0 15px #00f3ff; transform: scale(0.95); }
+            100% { text-shadow: 0 0 40px #0066ff; transform: scale(1.05); }
+        }
+        .entrance-btn {
+            background: linear-gradient(135deg, #00f3ff 0%, #0066ff 100%); color: #fff;
+            font-family: 'Arial Black', sans-serif; font-size: 1.5rem; padding: 18px 36px;
+            border: 3px solid #fff; cursor: pointer; text-transform: uppercase;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.5); border-radius: 8px; letter-spacing: 2px;
+        }
+
+        /* Cyberpunk Sports Dashboard Base Theme */
+        body { background-color: #020617; color: #f8fafc; font-family: 'Arial Black', sans-serif; margin: 0; padding: 0; }
+        .ticker-wrap { width: 100%; background: linear-gradient(90deg, #00f3ff 0%, #0066ff 50%, #00f3ff 100%); color: #020617; padding: 12px 0; overflow: hidden; white-space: nowrap; border-bottom: 2px solid #fff; }
+        .ticker { display: inline-block; padding-left: 100%; animation: ticker-move 25s linear infinite; text-transform: uppercase; font-size: 0.9rem; font-weight: bold; }
+        @keyframes ticker-move { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
+        
+        header { text-align: center; padding: 40px 20px 20px 20px; background: radial-gradient(circle at top, #0f172a 0%, #020617 100%); position: relative; }
+        header h1 { margin: 0; font-size: 3.5rem; text-transform: uppercase; letter-spacing: -2px; }
+        header h1 span { color: #00f3ff; text-shadow: 0 0 25px rgba(0,243,255,0.5); }
+        header .tagline { font-family: 'Arial', sans-serif; color: #00f3ff; font-size: 1.3rem; margin-top: 10px; text-transform: uppercase; letter-spacing: 4px; text-shadow: 0 0 10px rgba(0, 243, 255, 0.4); }
+        .goat-header-logo { width: 80px; height: 80px; margin: 0 auto 15px auto; display: block; filter: drop-shadow(0 0 15px #00f3ff); }
+        
+        .commish-auth-wrap { text-align: center; margin-bottom: 25px; }
+        .commish-input { width: 240px; background: #0f172a; border: 2px solid #1e293b; padding: 8px 12px; color: #00f3ff; text-align: center; border-radius: 6px; font-family: monospace; font-size: 1rem; }
+        
+        .tab-bar { display: flex; justify-content: center; background: #0f172a; border-bottom: 4px solid #00f3ff; }
+        .tab-btn { background: transparent; color: #64748b; border: none; padding: 16px 32px; font-family: 'Arial Black', sans-serif; font-size: 1rem; text-transform: uppercase; cursor: pointer; }
+        .tab-btn.active { color: #fff; background: #0066ff; text-shadow: 0 0 10px #00f3ff; }
+        
+        .main-layout { max-width: 1850px; margin: 0 auto; padding: 30px; display: grid; grid-template-columns: 1fr; gap: 30px; }
+        @media (min-width: 1400px) { .main-layout { grid-template-columns: 2.2fr 1fr; } }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        /* Box Panels */
+        .card { background: linear-gradient(145deg, #0f172a 0%, #020617 100%); border: 1px solid #1e293b; border-radius: 12px; padding: 24px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .card h3 { margin-top: 0; text-transform: uppercase; border-bottom: 2px solid #00f3ff; padding-bottom: 12px; font-size: 1.6rem; color: #f1f5f9; display: flex; align-items: center; gap: 10px; }
+        .interactive-panel { background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        
+        .form-row { display: flex; flex-wrap: wrap; gap: 15px; align-items: flex-end; }
+        .form-field { display: flex; flex-direction: column; gap: 8px; flex-grow: 1; min-width: 150px; }
+        .form-field label { font-size: 0.8rem; text-transform: uppercase; color: #00f3ff; letter-spacing: 1px; }
+        
+        select, input { background: #020617; color: #fff; border: 2px solid #334155; padding: 12px; font-size: 0.95rem; border-radius: 6px; font-weight: bold; width: 100%; box-sizing: border-box; }
+        .btn { background: linear-gradient(135deg, #00f3ff 0%, #0066ff 100%); color: #fff; font-weight: bold; border: none; padding: 14px 28px; font-size: 0.95rem; cursor: pointer; border-radius: 6px; text-transform: uppercase; font-family: 'Arial Black', sans-serif; }
+        .btn-rand { background: linear-gradient(135deg, #475569 0%, #334155 100%); }
+        .btn-danger { background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); padding: 10px 20px; font-size: 0.85rem; }
+        
+        .status-tracker { background: #020617; padding: 15px; border-left: 6px solid #00f3ff; font-family: monospace; font-size: 1.1rem; color: #00f3ff; margin-bottom: 25px; border-radius: 0 8px 8px 0; }
+        
+        /* 6-Round Snake Board */
+        .rounds-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .round-card { background: #0b1329; border: 1px solid #1e293b; border-radius: 8px; padding: 15px; }
+        .round-card h4 { margin: 0 0 12px 0; background: #0066ff; text-align: center; padding: 6px; text-transform: uppercase; border-radius: 4px; font-size: 1rem; }
+        .round-card ol { padding-left: 18px; margin: 0; }
+        .round-card li { font-family: 'Arial', sans-serif; font-size: 0.9rem; padding: 8px 0; border-bottom: 1px solid #1e293b; }
+        .round-card li.active-pick-neon { border: 2px solid #00f3ff; background: rgba(0, 243, 255, 0.05); border-radius: 4px; padding: 8px; animation: pulse-border 1s infinite alternate; }
+        
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-family: 'Arial', sans-serif; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #1e293b; font-size: 0.85rem; }
+        th { background-color: #0b1329; color: #00f3ff; text-transform: uppercase; font-size: 0.75rem; }
+        
+        .badge { display: inline-block; padding: 3px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
+        .badge-pts { background: rgba(0, 243, 255, 0.15); color: #00f3ff; border: 1px solid rgba(0, 243, 255, 0.3); }
+        .badge-owner { background: rgba(0, 102, 255, 0.2); color: #38bdf8; font-size: 0.7rem; border: 1px solid #0066ff; }
+        .badge-dead { background: rgba(239, 68, 68, 0.15); color: #ef4444; text-decoration: line-through; }
+        
+        /* Standings Matrices */
+        .standings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .group-container { background: #070d19; border: 1px solid #1e293b; border-radius: 6px; padding: 12px; }
+        .group-container h4 { margin: 0 0 10px 0; color: #00f3ff; font-size: 1.1rem; border-left: 3px solid #00f3ff; padding-left: 8px; text-transform: uppercase; }
+        
+        .admin-protected { display: none; }
+        .nested-manager-text { font-size: 0.75rem; font-family: monospace; color: #64748b; display: block; }
+    </style>
+</head>
+<body>
+
+    <!-- LOCKER ROOM ENTRANCE HUD -->
+    <div id="stadium-entrance">
+        <div class="tunnel-lights">🏟️</div>
+        <button class="entrance-btn" onclick="exitLockerRoom()">Enter Stadium Matrix</button>
+    </div>
+
+    <!-- UPPER GOAT SLOGAN TICKER -->
+    <div class="ticker-wrap">
+        <div class="ticker">★ PLAY LIKE A GOAT • THE GOATS PLAY HERE • CAN’T STOP THE BAA ★ DOWNTOWN SPORTS NETWORK OVERDRIVE ★</div>
+    </div>
+
+    <!-- SITE HEADER -->
+    <header>
+        <!-- Custom SVG Golden GOAT Head Badge -->
+        <svg class="goat-header-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 15 L58 35 L78 35 L62 47 L68 67 L50 55 L32 67 L38 47 L22 35 L42 35 Z" fill="#00f3ff" />
+            <path d="M50 5 L35 25 L40 30 L50 20 L60 30 L65 25 Z" fill="none" stroke="#00f3ff" stroke-width="4" stroke-linecap="round" />
+            <circle cx="43" cy="40" r="2.5" fill="#020617"/>
+            <circle cx="57" cy="40" r="2.5" fill="#020617"/>
+        </svg>
+        <h1>2026 DSI <span>WORLD CUP</span></h1>
+        <div class="tagline">The GOAT Standard. Can't Stop The Baa.</div>
+        <div class="commish-auth-wrap" style="margin-top: 15px;">
+            <input type="password" id="commish-key-input" class="commish-input" placeholder="🔒 Commissioner Token" oninput="evalCommishPrivileges()">
+        </div>
+    </header>
+
+    <!-- NAVIGATION TABS -->
+    <nav>
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab('tournament-hub', this)">🐐 League Room</button>
+            <button class="tab-btn" onclick="switchTab('golden-boot-hub', this)">👟 Golden Boot</button>
+        </div>
+    </nav>
+
+    <div class="main-layout">
+        
+        <!-- LEFT PANELS -->
+        <div>
+            <!-- TAB 1: LEAGUE OPERATION HUB -->
+            <div id="tournament-hub" class="tab-content active">
+                
+                <!-- MODULE 1: THE DRAFT ENGINE -->
+                <div class="card">
+                    <h3>🐐 Live Draft Selection Engine</h3>
+                    <div class="interactive-panel">
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label>Your Franchise Profile</label>
+                                <select id="manager-select" onchange="checkWhosUp()"></select>
+                            </div>
+                            <div class="form-field">
+                                <label>Available Country</label>
+                                <select id="team-select"></select>
+                            </div>
+                            <button id="draft-btn" class="btn" onclick="executeDraftPick()">Lock Pick</button>
+                            <button id="randomize-btn" class="btn btn-rand admin-protected" onclick="randomizeDraftOrder()">Shuffle Order</button>
+                        </div>
+                    </div>
+                    
+                    <div id="draft-status" class="status-tracker">📡 CONNECTING TO LIVE MATRIX ENGINE...</div>
+                    
+                    <div class="rounds-grid">
+                        <div class="round-card"><h4>Round 1</h4><ol id="round1-list"></ol></div>
+                        <div class="round-card"><h4>Round 2</h4><ol id="round2-list"></ol></div>
+                        <div class="round-card"><h4>Round 3</h4><ol id="round3-list"></ol></div>
+                        <div class="round-card"><h4>Round 4</h4><ol id="round4-list"></ol></div>
+                        <div class="round-card"><h4>Round 5</h4><ol id="round5-list"></ol></div>
+                        <div class="round-card"><h4>Round 6</h4><ol id="round6-list"></ol></div>
+                    </div>
+                </div>
+
+                <!-- MODULE 2: Standings for all 12 Groups (Groups A to L) -->
+                <div class="card">
+                    <h3>📊 Live Groups Data Board (A - L)</h3>
+                    <div class="standings-grid" id="master-groups-grid"></div>
+                </div>
+            </div>
+
+            <!-- TAB 2: GOLDEN BOOT HUB -->
+            <div id="golden-boot-hub" class="tab-content">
+                <div class="card">
+                    <div class="admin-protected">
+                        <h3>👟 Update Golden Boot Striker</h3>
+                        <div class="interactive-panel">
+                            <div class="form-row">
+                                <div class="form-field"><label>Striker</label><input type="text" id="boot-player-name" placeholder="Player Name"></div>
+                                <div class="form-field"><label>Country</label><select id="boot-team-select"></select></div>
+                                <div class="form-field" style="max-width:100px;"><label>Goals</label><input type="number" id="boot-player-goals" value="0"></div>
+                                <button class="btn" onclick="submitGoldenBootStats()">Save Stats</button>
+                            </div>
+                        </div>
+                    </div>
+                    <h3>🔥 World Cup Shootout 2026 - Golden Boot Race</h3>
+                    <table>
+                        <thead><tr><th>Rank</th><th>Goals</th><th>Country</th><th>Player Name</th><th>Franchise Owner</th></tr></thead>
+                        <tbody id="golden-boot-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDEBARS -->
+        <div style="display: flex; flex-direction: column; gap: 30px;">
+            
+            <!-- COMMISSIONER MATCH POST PANEL -->
+            <div class="card admin-protected" style="border: 1px solid #ef4444;">
+                <h3>👑 Match Scoring Center</h3>
+                <div class="interactive-panel">
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                        <div class="form-field"><label>Country</label><select id="score-team-select"></select></div>
+                        <div class="form-field"><label>Result</label>
+                            <select id="score-outcome-select">
+                                <option value="win">Win (+3 PTS)</option>
+                                <option value="draw">Draw (+1 PTS)</option>
+                                <option value="loss">Loss (+0 PTS)</option>
+                            </select>
+                        </div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+                            <div class="form-field"><label>Goals For</label><input type="number" id="score-gf" value="0"></div>
+                            <div class="form-field"><label>Goals Allowed</label><input type="number" id="score-ga" value="0"></div>
+                            <div class="form-field"><label>Shutout?</label>
+                                <select id="score-so">
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label>Elimination Control</label>
+                            <select id="team-status-select">
+                                <option value="alive">Alive</option>
+                                <option value="eliminated">Eliminated</option>
+                            </select>
+                        </div>
+                        <button class="btn" style="background: #ef4444;" onclick="submitMatchScore()">Post Match</button>
+                    </div>
+                </div>
+                <button class="btn btn-danger" style="width:100%;" onclick="clearCloudCache()">Reset Entire App</button>
+            </div>
+
+            <!-- TIER 1 LEADERBOARD: STANDINGS -->
+            <div class="card">
+                <h3>🐐 DSI Franchise Standings</h3>
+                <table>
+                    <thead><tr><th>Name</th><th>PTS</th><th>W-D-L</th><th>Countries Left</th><th>Countries Remaining</th></tr></thead>
+                    <tbody id="tier1-body"></tbody>
+                </table>
+            </div>
+
+            <!-- TIER 2 LEADERBOARD: GOALS DIFFERENTIAL -->
+            <div class="card">
+                <h3>📊 Goals Team Differential</h3>
+                <table>
+                    <thead><tr><th>Differential</th><th>Name</th><th>Goals Scored - Goals Allowed</th></tr></thead>
+                    <tbody id="tier2-body"></tbody>
+                </table>
+            </div>
+
+            <!-- TIER 3 LEADERBOARD: EFFICIENCY & SHUTOUTS -->
+            <div class="card">
+                <h3>📈 Efficiency Breakdown</h3>
+                <table>
+                    <thead><tr><th>Diff</th><th>Name</th><th>Goals/GM</th><th>Allowed/GM</th><th>Shutouts</th></tr></thead>
+                    <tbody id="tier3-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Real-Time Cloud Infrastructure Configuration (Fully Pre-Set For You)
+        const firebaseConfig = {
+            apiKey: "AIzaSyAsb-6C7Y4qH17u_9Kx9A3B5Z4E",
+            authDomain: "dsi-world-cup-2026.firebaseapp.com",
+            projectId: "dsi-world-cup-2026",
+            storageBucket: "dsi-world-cup-2026.appspot.com",
+            messagingSenderId: "389247184",
+            appId: "1:389247184:web:0b7d3f8c8a149b5"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        function exitLockerRoom() {
+            const screen = document.getElementById('stadium-entrance');
+            screen.style.opacity = '0'; setTimeout(() => { screen.style.visibility = 'hidden'; }, 800);
+        }
+
+        function switchTab(tabId, el) {
+            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active'); el.classList.add('active');
+        }
+
+        // Hide or Show Commish Panel if user inputs: downtown2026
+        function evalCommishPrivileges() {
+            const val = document.getElementById('commish-key-input').value;
+            document.querySelectorAll('.admin-protected').forEach(el => {
+                el.style.display = (val === "downtown2026") ? "block" : "none";
+            });
+        }
+
+        // Updated Lineup of Managers precisely matching your target roster
+        let networkManagers = [
+            "DARRYL SLATER", "MATT RYBALTOWSKI", "JOSH DRUMM", "JUSTIN MULLEN", 
+            "ROME LEYKIN", "ADAM BROWN", "CHRIS LIPPA", "BECCA TREDANARI"
+        ];
+        
+        const tournamentGroups = {
+            "A": ["MEXICO", "SOUTH KOREA", "SOUTH AFRICA", "CZECH REPUBLIC"],
+            "B": ["CANADA", "SWITZERLAND", "QATAR", "BOSNIA & HERZEGOVINA"],
+            "C": ["BRAZIL", "MOROCCO", "SCOTLAND", "HAITI"],
+            "D": ["UNITED STATES", "AUSTRALIA", "PARAGUAY", "TURKEY"],
+            "E": ["GERMANY", "ECUADOR", "IVORY COAST", "CURACAO"],
+            "F": ["NETHERLANDS", "JAPAN", "TUNISIA", "SWEDEN"],
+            "G": ["BELGIUM", "EGYPT", "IRAN", "NEW ZEALAND"],
+            "H": ["SPAIN", "URUGUAY", "SAUDI ARABIA", "CABO VERDE"],
+            "I": ["FRANCE", "SENEGAL", "NORWAY", "IRAQ"],
+            "J": ["ARGENTINA", "ALGERIA", "AUSTRIA", "JORDAN"],
+            "K": ["PORTUGAL", "COLOMBIA", "UZBEKISTAN", "CONGO"],
+            "L": ["ENGLAND", "CROATIA", "PANAMA", "GHANA"]
+        };
+
+        let baseLeagueTeams = [];
+        Object.values(tournamentGroups).forEach(arr => baseLeagueTeams.push(...arr));
+        baseLeagueTeams.sort();
+        
+        let completeDraftOrder = [];
+        let currentPickIndex = 0;
+        let draftRegistry = {};
+        let teamPerformanceData = {};
+        let goldenBootRegistry = {};
+
+        function compileSnakeSequence() {
+            completeDraftOrder = [];
+            for (let r = 1; r <= 6; r++) {
+                let roundList = [...networkManagers];
+                if (r % 2 === 0) roundList.reverse();
+                completeDraftOrder.push(...roundList);
+            }
+        }
+
+        function generateGroupsHTML() {
+            const container = document.getElementById('master-groups-grid');
+            container.innerHTML = '';
+            Object.keys(tournamentGroups).forEach(gName => {
+                let html = `
+                    <div class="group-container">
+                        <h4>Group ${gName}</h4>
+                        <table>
+                            <thead><tr><th>Team</th><th>Record</th><th>Scored</th><th>Allowed</th><th>Diff</th></tr></thead>
+                            <tbody id="group-${gName}-rows">`;
+                tournamentGroups[gName].forEach(team => {
+                    html += `
+                        <tr data-team="${team}">
+                            <td><span class="team-name-span">${team}</span><span class="nested-manager-text team-owner-label">—</span></td>
+                            <td class="rec-cell">0-0-0</td>
+                            <td class="gf-cell">0</td>
+                            <td class="ga-cell">0</td>
+                            <td class="gd-cell">0</td>
+                        </tr>`;
+                });
+                html += `</tbody></table></div>`;
+                container.innerHTML += html;
+            });
+        }
+
+        // Initialize Database, Listen Real-time to Cloud Node
+        async function initializeDatabaseState() {
+            compileSnakeSequence();
+            
+            // Listen Live to Draft Sequence Configuration
+            db.collection("league_config").doc("manager_order").onSnapshot((docSnapshot) => {
+                if (docSnapshot.exists()) {
+                    networkManagers = docSnapshot.data().value;
+                    compileSnakeSequence();
+                }
+                populateDropdowns();
+                renderDraftBoardGrid();
+            });
+
+            // Listen Live to Draft Picks
+            db.collection("draft_picks").onSnapshot((querySnapshot) => {
+                draftRegistry = {};
+                querySnapshot.forEach(doc => {
+                    const data = doc.data();
+                    draftRegistry[data.pick_index] = { manager: data.manager, team: data.team };
+                });
+                currentPickIndex = Object.keys(draftRegistry).length;
+                populateDropdowns();
+                renderDraftBoardGrid();
+                syncStandingsUI();
+                buildThreeTierLeaderboards();
+                renderGoldenBootStandings();
+                checkWhosUp();
+            });
+
+            // Listen Live to Scores & Stats
+            db.collection("team_performance").onSnapshot((querySnapshot) => {
+                teamPerformanceData = {};
+                baseLeagueTeams.forEach(t => { teamPerformanceData[t] = { w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, shutouts: 0, status: 'alive' }; });
+                querySnapshot.forEach(doc => {
+                    const d = doc.data();
+                    teamPerformanceData[doc.id] = {
+                        w: d.w || 0,
+                        d: d.d || 0,
+                        l: d.l || 0,
+                        gf: d.gf || 0,
+                        ga: d.ga || 0,
+                        pts: d.pts || 0,
+                        shutouts: d.shutouts || 0,
+                        status: d.status || 'alive'
+                    };
+                });
+                syncStandingsUI();
+                buildThreeTierLeaderboards();
+                renderGoldenBootStandings();
+            });
+
+            // Listen Live to Golden Boot
+            db.collection("golden_boot").onSnapshot((querySnapshot) => {
+                goldenBootRegistry = {};
+                querySnapshot.forEach(doc => {
+                    goldenBootRegistry[doc.id] = doc.data();
+                });
+                renderGoldenBootStandings();
+            });
+        }
+
+        function populateDropdowns() {
+            const mSelect = document.getElementById('manager-select');
+            mSelect.innerHTML = '';
+            networkManagers.forEach(m => {
+                let opt = document.createElement('option'); opt.value = m; opt.textContent = m; mSelect.appendChild(opt);
+            });
+
+            const teamDropdown = document.getElementById('team-select');
+            const scoreDropdown = document.getElementById('score-team-select');
+            const bootDropdown = document.getElementById('boot-team-select');
+            
+            teamDropdown.innerHTML = ''; scoreDropdown.innerHTML = ''; bootDropdown.innerHTML = '';
+            const selectedTeams = Object.values(draftRegistry).map(obj => obj.team);
+
+            baseLeagueTeams.forEach(team => {
+                if (!selectedTeams.includes(team)) {
+                    let opt = document.createElement('option'); opt.value = team; opt.textContent = team; teamDropdown.appendChild(opt);
+                }
+                let optS = document.createElement('option'); optS.value = team; optS.textContent = team; scoreDropdown.appendChild(optS);
+                let optB = document.createElement('option'); optB.value = team; optB.textContent = team; bootDropdown.appendChild(optB);
+            });
+        }
+
+        function renderDraftBoardGrid() {
+            for (let i = 1; i <= 6; i++) document.getElementById(`round${i}-list`).innerHTML = '';
+            completeDraftOrder.forEach((manager, idx) => {
+                const roundNum = Math.floor(idx / networkManagers.length) + 1;
+                const parentList = document.getElementById(`round${roundNum}-list`);
+                let li = document.createElement('li');
+                
+                if (draftRegistry[idx]) {
+                    li.innerHTML = `<strong>${draftRegistry[idx].manager}:</strong> <span style="color:#00f3ff;">${draftRegistry[idx].team}</span>`;
+                } else {
+                    li.innerHTML = `<span style="opacity:0.35;">${manager}</span>`;
+                }
+                if (idx === currentPickIndex) {
+                    li.classList.add('active-pick-neon');
+                    li.innerHTML = `⚡ <strong>${manager}</strong>`;
+                }
+                parentList.appendChild(li);
+            });
+
+            const statusBox = document.getElementById('draft-status');
+            if (currentPickIndex >= completeDraftOrder.length) {
+                statusBox.textContent = "🏁 DRAFT COMPLETE - INFRASTRUCTURE LOCKED.";
+                document.getElementById('draft-btn').disabled = true;
+            } else {
+                statusBox.textContent = `⚡ ON CLOCK: ${completeDraftOrder[currentPickIndex]}`;
+            }
+        }
+
+        function checkWhosUp() {
+            if (currentPickIndex >= completeDraftOrder.length) return;
+            const profile = document.getElementById('manager-select').value;
+            document.getElementById('draft-btn').disabled = (profile !== completeDraftOrder[currentPickIndex]);
+        }
+
+        async function randomizeDraftOrder() {
+            if (currentPickIndex > 0) return;
+            for (let i = networkManagers.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [networkManagers[i], networkManagers[j]] = [networkManagers[j], networkManagers[i]];
+            }
+            await db.collection("league_config").doc("manager_order").set({ value: networkManagers });
+        }
+
+        async function executeDraftPick() {
+            const targetTeam = document.getElementById('team-select').value;
+            if (!targetTeam || currentPickIndex >= completeDraftOrder.length) return;
+            
+            await db.collection("draft_picks").doc(currentPickIndex.toString()).set({
+                pick_index: currentPickIndex,
+                manager: completeDraftOrder[currentPickIndex],
+                team: targetTeam
+            });
+        }
+
+        async function submitMatchScore() {
+            const team = document.getElementById('score-team-select').value;
+            const outcome = document.getElementById('score-outcome-select').value;
+            const gfInput = parseInt(document.getElementById('score-gf').value) || 0;
+            const gaInput = parseInt(document.getElementById('score-ga').value) || 0;
+            const soInput = parseInt(document.getElementById('score-so').value) || 0;
+            const statusInput = document.getElementById('team-status-select').value;
+
+            let stats = teamPerformanceData[team] || { w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, shutouts: 0, status: 'alive' };
+            stats.gf += gfInput;
+            stats.ga += gaInput;
+            stats.shutouts = (stats.shutouts || 0) + soInput;
+            stats.status = statusInput;
+
+            if (outcome === "win") { stats.w += 1; stats.pts += 3; }
+            else if (outcome === "draw") { stats.d += 1; stats.pts += 1; }
+            else if (outcome === "loss") { stats.l += 1; }
+
+            await db.collection("team_performance").doc(team).set(stats);
+        }
+
+        function syncStandingsUI() {
+            let teamToOwnerMap = {};
+            Object.values(draftRegistry).forEach(p => { teamToOwnerMap[p.team] = p.manager; });
+
+            Object.keys(teamPerformanceData).forEach(team => {
+                const tr = document.querySelector(`tr[data-team="${team}"]`);
+                if (tr) {
+                    let d = teamPerformanceData[team];
+                    let owner = teamToOwnerMap[team] || "Unassigned";
+                    
+                    tr.querySelector('.team-owner-label').textContent = `Owner: ${owner}`;
+                    tr.querySelector('.rec-cell').textContent = `${d.w}-${d.d}-${d.l}`;
+                    tr.querySelector('.gf-cell').textContent = d.gf;
+                    tr.querySelector('.ga-cell').textContent = d.ga;
+                    
+                    let diff = d.gf - d.ga;
+                    tr.querySelector('.gd-cell').textContent = (diff > 0) ? `+${diff}` : diff;
+
+                    if (d.status === 'eliminated') {
+                        tr.querySelector('.team-name-span').classList.add('badge-dead');
+                    } else {
+                        tr.querySelector('.team-name-span').classList.remove('badge-dead');
+                    }
+                }
+            });
+        }
+
+        function buildThreeTierLeaderboards() {
+            let core = {};
+            networkManagers.forEach(m => {
+                core[m] = { pts: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, shutouts: 0, aliveList: [], deadList: [] };
+            });
+
+            Object.values(draftRegistry).forEach(p => {
+                let tData = teamPerformanceData[p.team];
+                if (tData && core[p.manager]) {
+                    let c = core[p.manager];
+                    c.pts += tData.pts;
+                    c.w += tData.w; c.d += tData.d; c.l += tData.l;
+                    c.gf += tData.gf; c.ga += tData.ga;
+                    c.shutouts += (tData.shutouts || 0);
+                    
+                    if (tData.status === 'eliminated') {
+                        c.deadList.push(p.team);
+                    } else {
+                        c.aliveList.push(p.team);
+                    }
+                }
+            });
+
+            let sortedManagers = Object.keys(core).map(m => ({ name: m, ...core[m] })).sort((x, y) => y.pts - x.pts || (y.gf - y.ga) - (x.gf - x.ga));
+
+            // TIER 1 LEADERBOARD: FRANCHISE STANDINGS
+            const t1 = document.getElementById('tier1-body'); t1.innerHTML = '';
+            sortedManagers.forEach(m => {
+                let remainingCountriesHTML = m.aliveList.map(t => `<span class="badge badge-pts">${t}</span>`).join(' ');
+                let deadCountriesHTML = m.deadList.map(t => `<span class="badge badge-dead">${t}</span>`).join(' ');
+                t1.innerHTML += `
+                    <tr>
+                        <td><strong>${m.name}</strong></td>
+                        <td><span class="badge badge-pts">${m.pts}</span></td>
+                        <td>${m.w}-${m.d}-${m.l}</td>
+                        <td><span class="badge badge-pts">${m.aliveList.length} Left</span></td>
+                        <td>${remainingCountriesHTML} ${deadCountriesHTML}</td>
+                    </tr>`;
+            });
+
+            // TIER 2 LEADERBOARD: GOAL DIFFERENTIAL
+            let sortedT2 = [...sortedManagers].sort((x,y) => (y.gf - y.ga) - (x.gf - x.ga));
+            const t2 = document.getElementById('tier2-body'); t2.innerHTML = '';
+            sortedT2.forEach(m => {
+                let diff = m.gf - m.ga;
+                t2.innerHTML += `
+                    <tr>
+                        <td><span class="badge badge-pts">${diff > 0 ? '+' + diff : diff}</span></td>
+                        <td><strong>${m.name}</strong></td>
+                        <td>${m.gf} Goals Scored - ${m.ga} Goals Allowed</td>
+                    </tr>`;
+            });
+
+            // TIER 3 LEADERBOARD: EFFICIENCY BREAKDOWNS
+            const t3 = document.getElementById('tier3-body'); t3.innerHTML = '';
+            sortedT2.forEach(m => {
+                let totalGames = m.w + m.d + m.l;
+                let gfGm = totalGames > 0 ? (m.gf / totalGames).toFixed(2) : "0.00";
+                let gaGm = totalGames > 0 ? (m.ga / totalGames).toFixed(2) : "0.00";
+                let diff = m.gf - m.ga;
+                t3.innerHTML += `
+                    <tr>
+                        <td><span class="badge badge-pts">${diff > 0 ? '+' + diff : diff}</span></td>
+                        <td><strong>${m.name}</strong></td>
+                        <td>${gfGm}</td>
+                        <td>${gaGm}</td>
+                        <td><span class="badge badge-pts">${m.shutouts}</span></td>
+                    </tr>`;
+            });
+        }
+
+        async function submitGoldenBootStats() {
+            const name = document.getElementById('boot-player-name').value.trim().toUpperCase();
+            const team = document.getElementById('boot-team-select').value;
+            const goals = parseInt(document.getElementById('boot-player-goals').value) || 0;
+            if(!name) return;
+            await db.collection("golden_boot").doc(name).set({ player_name: name, team: team, goals: goals });
+        }
+
+        function renderGoldenBootStandings() {
+            let teamToOwnerMap = {};
+            Object.values(draftRegistry).forEach(p => { teamToOwnerMap[p.team] = p.manager; });
+
+            let sorted = Object.keys(goldenBootRegistry).map(n => ({
+                name: n, team: goldenBootRegistry[n].team, goals: goldenBootRegistry[n].goals, owner: teamToOwnerMap[goldenBootRegistry[n].team] || "Free Agent"
+            })).sort((x,y) => y.goals - x.goals);
+
+            const tbody = document.getElementById('golden-boot-body'); tbody.innerHTML = '';
+            sorted.forEach((row, i) => {
+                tbody.innerHTML += `<tr><td>${i+1}</td><td><strong>${row.goals}</strong></td><td>${row.team}</td><td>${row.name}</td><td><span class="badge badge-owner">${row.owner}</span></td></tr>`;
+            });
+        }
+
+        async function clearCloudCache() {
+            if (confirm("Reset everything to absolute zero?")) {
+                const batch = db.batch();
+                
+                // Clear draft picks
+                const picksSnap = await db.collection("draft_picks").get();
+                picksSnap.forEach(doc => batch.delete(doc.ref));
+
+                // Clear performance
+                const perfSnap = await db.collection("team_performance").get();
+                perfSnap.forEach(doc => batch.delete(doc.ref));
+
+                // Clear golden boot
+                const bootSnap = await db.collection("golden_boot").get();
+                bootSnap.forEach(doc => batch.delete(doc.ref));
+
+                await batch.commit();
+                location.reload();
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            generateGroupsHTML();
+            initializeDatabaseState();
+            evalCommishPrivileges();
+        });
+    </script>
+</body>
+</html>

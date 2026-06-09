@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 DSI World Cup: Master Matrix</title>
+    <style>
+        /* Cinematic Entrance */
+        #stadium-entrance { position: fixed; top:0; left:0; width:100vw; height:100vh; background:#020617; z-index:9999; display:flex; flex-direction:column; justify-content:center; align-items:center; transition:opacity 1.2s ease; }
+        .intro-text { font-family: 'Arial Black', sans-serif; font-size:3rem; color:#fff; margin-bottom:30px; animation: flicker 2s infinite; }
+        @keyframes flicker { 0%, 100% { opacity:1; } 50% { opacity:0.3; } }
+        .entrance-btn { background:#00f3ff; color:#000; padding:20px 40px; border:none; cursor:pointer; font-weight:bold; border-radius:4px; }
+
+        /* Dashboard Branding */
+        body { background-color:#020617; color:#f8fafc; font-family: 'Arial Black', sans-serif; margin:0; }
+        .ticker-wrap { background:#00f3ff; color:#020617; padding:10px; font-weight:bold; text-transform:uppercase; overflow:hidden; white-space:nowrap; }
+        header { text-align:center; padding:30px; }
+        .goat-logo { width:80px; filter:drop-shadow(0 0 10px #00f3ff); }
+        .tab-bar { display:flex; justify-content:center; gap:10px; padding:20px; background:#0f172a; }
+        .tab-btn { background:#1e293b; color:#fff; border:none; padding:12px 24px; cursor:pointer; font-weight:bold; }
+        .tab-btn.active { background:#0066ff; }
+        
+        .card { background:#0f172a; border-radius:8px; padding:20px; margin:20px; border:1px solid #1e293b; }
+        table { width:100%; border-collapse:collapse; }
+        th { color:#00f3ff; text-align:left; padding:10px; border-bottom:1px solid #334155; }
+        td { padding:10px; border-bottom:1px solid #1e293b; }
+        
+        /* Draft Styling */
+        .draft-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); gap:10px; }
+        .team-tile { padding:15px; background:#334155; text-align:center; border-radius:4px; cursor:pointer; transition:0.3s; }
+        .team-tile:hover { background:#00f3ff; color:#000; }
+    </style>
+</head>
+<body>
+
+    <div id="stadium-entrance">
+        <div class="intro-text">DSI 2026: WORLD CUP MATRIX</div>
+        <button class="entrance-btn" onclick="document.getElementById('stadium-entrance').style.display='none'">ENTER STADIUM</button>
+    </div>
+
+    <div class="ticker-wrap">★ PLAY LIKE A GOAT • THE GOATS PLAY HERE • CAN’T STOP THE BAA ★ DOWNTOWN SPORTS NETWORK OVERDRIVE ★</div>
+
+    <header>
+        <svg class="goat-logo" viewBox="0 0 100 100"><path d="M50 15 L58 35 L78 35 L62 47 L68 67 L50 55 L32 67 L38 47 L22 35 L42 35 Z" fill="#00f3ff"/></svg>
+        <h1>2026 DSI <span>WORLD CUP</span></h1>
+    </header>
+
+    <nav class="tab-bar">
+        <button class="tab-btn active" onclick="showTab('hub')">🐐 League Hub</button>
+        <button class="tab-btn" onclick="showTab('draft')">🐍 Live Draft</button>
+        <button class="tab-btn" onclick="showTab('ko')">🏆 Knockout Bracket</button>
+    </nav>
+
+    <div id="hub" class="tab-content">
+        <div class="card" id="groups-container"><h3>📊 Group Standings (A-L)</h3></div>
+    </div>
+
+    <div id="draft" class="tab-content" style="display:none;">
+        <div class="card">
+            <h3>🐍 Real-Time Snake Draft Board</h3>
+            <div class="draft-grid" id="draft-board"></div>
+        </div>
+    </div>
+
+    <div id="ko" class="tab-content" style="display:none;">
+        <div class="card"><h3>🏆 Knockout Bracket (Round of 32)</h3><p style="color:#64748b;">Bracket structure ready for seeding...</p></div>
+    </div>
+
+    <script>
+        function showTab(id) {
+            document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+        }
+
+        const groups = {
+            "A": ["MEXICO", "SOUTH KOREA", "SOUTH AFRICA", "CZECHIA"],
+            "B": ["CANADA", "SWITZERLAND", "QATAR", "BOSNIA"],
+            "C": ["BRAZIL", "MOROCCO", "SCOTLAND", "HAITI"],
+            "D": ["USA", "AUSTRALIA", "PARAGUAY", "TURKEY"],
+            "E": ["GERMANY", "ECUADOR", "IVORY COAST", "CURACAO"],
+            "F": ["NETHERLANDS", "JAPAN", "TUNISIA", "SWEDEN"],
+            "G": ["BELGIUM", "EGYPT", "IRAN", "NEW ZEALAND"],
+            "H": ["SPAIN", "URUGUAY", "SAUDI ARABIA", "CABO VERDE"],
+            "I": ["FRANCE", "SENEGAL", "NORWAY", "IRAQ"],
+            "J": ["ARGENTINA", "ALGERIA", "AUSTRIA", "JORDAN"],
+            "K": ["PORTUGAL", "COLOMBIA", "UZBEKISTAN", "CONGO DR"],
+            "L": ["ENGLAND", "CROATIA", "PANAMA", "GHANA"]
+        };
+
+        function init() {
+            const container = document.getElementById('groups-container');
+            const board = document.getElementById('draft-board');
+            
+            Object.keys(groups).forEach(g => {
+                container.innerHTML += `<h4>Group ${g}</h4><table><tr><th>Team</th><th>PTS</th><th>REC</th><th>GF</th><th>GA</th></tr>` + 
+                groups[g].map(t => `<tr><td>${t}</td><td>0</td><td>0-0-0</td><td>0</td><td>0</td></tr>`).join('') + `</table>`;
+                
+                groups[g].forEach(team => {
+                    const div = document.createElement('div');
+                    div.className = 'team-tile';
+                    div.innerText = team;
+                    board.appendChild(div);
+                });
+            });
+        }
+        window.onload = init;
+    </script>
+</body>
+</html>

@@ -1,0 +1,621 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downtown Sports Network - GOAT ALERT</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neonGreen: '#39FF14',
+                        neonPurple: '#d946ef',
+                        neonBlue: '#38bdf8',
+                        darkBg: '#050508',
+                        glassBg: 'rgba(10, 10, 18, 0.7)',
+                    },
+                    boxShadow: {
+                        neonGreen: '0 0 15px rgba(57, 255, 20, 0.4)',
+                        neonPurple: '0 0 15px rgba(217, 70, 239, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #030306;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
+                radial-gradient(at 50% 0%, rgba(217, 70, 239, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.08) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+        .header-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(13, 13, 23, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: rgba(57, 255, 20, 0.3);
+            border-radius: 3px;
+        }
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .pulse-indicator {
+            animation: pulse-soft 2s infinite;
+        }
+    </style>
+</head>
+<body class="text-gray-100 min-h-screen pb-16">
+
+    <!-- Top Scrolling Ticker -->
+    <div class="w-full bg-black/80 border-b border-neonGreen/30 py-2 overflow-hidden whitespace-nowrap header-font text-xs tracking-wider z-50">
+        <div class="inline-block animate-[marquee_25s_linear_infinite] text-neonGreen">
+            🐐 GOAT ALERT: ROME SEIZES LEAD WITH 43 PTS • 🚨 THE CARTEL HAS BEEN FLUSHED • ⚽ LIONEL MESSI SCORES IN 9 STRAIGHT WORLD CUP GAMES • ⭐ 8 COUNTRIES REMAIN • 🏆 QUARTERFINALS START THURSDAY 4PM • 💥 ADAMS CHAMPIONSHIP HOPES DOWN THE DRAIN •
+        </div>
+        <style>
+            @keyframes marquee {
+                0% { transform: translate3d(100%, 0, 0); }
+                100% { transform: translate3d(-100%, 0, 0); }
+            }
+        </style>
+    </div>
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+        
+        <!-- Header Section -->
+        <header class="flex flex-col md:flex-row justify-between items-center mb-8 gap-6 p-6 glass-panel rounded-2xl border-l-4 border-l-neonGreen shadow-neonGreen">
+            <div class="flex items-center gap-4">
+                <div class="bg-black/50 p-4 rounded-xl border border-neonGreen/30 text-4xl shadow-md">
+                    🐐
+                </div>
+                <div>
+                    <h1 class="header-font text-2xl sm:text-3xl font-black text-white tracking-widest flex items-center gap-2">
+                        DOWNTOWN SPORTS NETWORK
+                    </h1>
+                    <p class="text-neonGreen font-bold tracking-widest text-sm uppercase flex items-center gap-2">
+                        <span class="inline-block w-2.5 h-2.5 bg-neonGreen rounded-full pulse-indicator"></span>
+                        World Cup Shootout 2026 — Goat Alert
+                    </p>
+                </div>
+            </div>
+            <div class="text-center md:text-right header-font">
+                <div class="text-gray-400 text-xs">CURRENT DATE</div>
+                <div class="text-white font-bold text-lg">THURSDAY, JULY 9, 2026</div>
+                <div class="inline-block bg-neonPurple/20 text-neonPurple border border-neonPurple/40 text-xs font-bold px-3 py-1 rounded-full mt-1">
+                    🏆 Quarterfinals Locked
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- LEFT COLUMN: Leaderboard & Quick Stats (5 Cols on Large) -->
+            <div class="lg:col-span-5 flex flex-col gap-8">
+                
+                <!-- STANDINGS GOATBOARD -->
+                <section class="glass-panel rounded-2xl p-6 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-neonGreen/5 rounded-full blur-xl pointer-events-none"></div>
+                    <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/5">
+                        <h2 class="header-font text-lg font-bold tracking-wide text-white flex items-center gap-2">
+                            <span>📊</span> THE LEADERBOARD
+                        </h2>
+                        <span class="text-xs text-gray-400">Total Points Tracked</span>
+                    </div>
+
+                    <!-- Standing Cards -->
+                    <div class="space-y-3" id="leaderboard-list">
+                        <!-- Populated by JavaScript to support live predictions simulation -->
+                    </div>
+
+                    <div class="mt-4 p-3 bg-white/5 rounded-lg text-xs text-gray-400 flex items-start gap-2">
+                        <span class="text-neonGreen">💡</span>
+                        <span>Click teams in the <strong>Road to the Crown Predictor</strong> to simulate outcomes and watch the points dynamically recalculate!</span>
+                    </div>
+                </section>
+
+                <!-- TOURNAMENT ADVANCED METRICS -->
+                <section class="glass-panel rounded-2xl p-6">
+                    <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/5">
+                        <h2 class="header-font text-lg font-bold tracking-wide text-white flex items-center gap-2">
+                            <span>📈</span> LEAGUE ADVANCED METRICS
+                        </h2>
+                        <span class="text-xs text-neonGreen">IMG_2220 Extracted</span>
+                    </div>
+                    <div class="overflow-x-auto custom-scroll">
+                        <table class="w-full text-left text-sm">
+                            <thead>
+                                <tr class="text-gray-400 border-b border-white/10 text-xs tracking-wider uppercase">
+                                    <th class="py-2 pr-2">Manager</th>
+                                    <th class="py-2 text-center">Diff</th>
+                                    <th class="py-2 text-center">Scored</th>
+                                    <th class="py-2 text-center">Allowed</th>
+                                    <th class="py-2 text-center">SO</th>
+                                    <th class="py-2 text-right">Avg/M</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-white/5 font-semibold">
+                                <tr class="hover:bg-white/5 transition duration-150">
+                                    <td class="py-2 text-white">Justin Mullen</td>
+                                    <td class="py-2 text-center text-neonGreen">8</td>
+                                    <td class="py-2 text-center">45</td>
+                                    <td class="py-2 text-center text-gray-400">37</td>
+                                    <td class="py-2 text-center">8</td>
+                                    <td class="py-2 text-right text-neonGreen">0.31</td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition duration-150">
+                                    <td class="py-2 text-white">Rome Leykin</td>
+                                    <td class="py-2 text-center text-neonGreen">6</td>
+                                    <td class="py-2 text-center">36</td>
+                                    <td class="py-2 text-center text-gray-400">30</td>
+                                    <td class="py-2 text-center">10</td>
+                                    <td class="py-2 text-right text-neonGreen">0.23</td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition duration-150">
+                                    <td class="py-2 text-white">Darryl Slater</td>
+                                    <td class="py-2 text-center text-neonGreen">3</td>
+                                    <td class="py-2 text-center">42</td>
+                                    <td class="py-2 text-center text-gray-400">39</td>
+                                    <td class="py-2 text-center">6</td>
+                                    <td class="py-2 text-right text-neonGreen">0.12</td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition duration-150 text-neonPurple">
+                                    <td class="py-2">Keith Krech</td>
+                                    <td class="py-2 text-center">2</td>
+                                    <td class="py-2 text-center">36</td>
+                                    <td class="py-2 text-center">34</td>
+                                    <td class="py-2 text-center">6</td>
+                                    <td class="py-2 text-right">0.09</td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition duration-150 text-neonPurple">
+                                    <td class="py-2">Adam Brown</td>
+                                    <td class="py-2 text-center">-1</td>
+                                    <td class="py-2 text-center">29</td>
+                                    <td class="py-2 text-center">30</td>
+                                    <td class="py-2 text-center">11</td>
+                                    <td class="py-2 text-right">-0.04</td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition duration-150">
+                                    <td class="py-2 text-white">Matt Rybaltowski</td>
+                                    <td class="py-2 text-center text-red-400">-3</td>
+                                    <td class="py-2 text-center">33</td>
+                                    <td class="py-2 text-center text-gray-400">36</td>
+                                    <td class="py-2 text-center">6</td>
+                                    <td class="py-2 text-right text-red-400">-0.12</td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition duration-150">
+                                    <td class="py-2 text-white">Josh Drumm</td>
+                                    <td class="py-2 text-center text-red-400">-3</td>
+                                    <td class="py-2 text-center">43</td>
+                                    <td class="py-2 text-center text-gray-400">46</td>
+                                    <td class="py-2 text-center">1</td>
+                                    <td class="py-2 text-right text-red-400">-0.13</td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition duration-150 text-neonPurple">
+                                    <td class="py-2">Becca Tredanari</td>
+                                    <td class="py-2 text-center">-12</td>
+                                    <td class="py-2 text-center">16</td>
+                                    <td class="py-2 text-center">28</td>
+                                    <td class="py-2 text-center">6</td>
+                                    <td class="py-2 text-right">-0.60</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- TRASH TALK & SLOGAN GENERATOR -->
+                <section class="glass-panel rounded-2xl p-6 border border-neonPurple/30">
+                    <h2 class="header-font text-lg font-bold text-white mb-3 flex items-center gap-2">
+                        <span>🎙️</span> #GOATLIFE COMMISH ROAST ROOM
+                    </h2>
+                    <div id="roast-display" class="bg-black/50 p-4 rounded-xl border border-neonPurple/20 min-h-[90px] flex items-center justify-center text-center font-bold italic text-neonPurple tracking-wide transition duration-300">
+                        "It’s tough to knock out the champs... but it’s remarkably easy to look like Adam."
+                    </div>
+                    <button onclick="generateRoast()" class="w-full mt-4 bg-neonPurple hover:bg-neonPurple/80 text-black font-black py-2.5 rounded-xl transition duration-200 header-font uppercase tracking-wider text-xs">
+                        🔥 Fire Another Roast
+                    </button>
+                </section>
+                
+            </div>
+
+            <!-- RIGHT COLUMN: Interactive Predictor & Match Recaps (7 Cols) -->
+            <div class="lg:col-span-7 flex flex-col gap-8">
+                
+                <!-- ROAD TO THE CROWN PREDICTOR (Simulator) -->
+                <section class="glass-panel rounded-2xl p-6 border border-neonGreen/20 relative">
+                    <div class="absolute -top-3 left-6 bg-neonGreen text-black text-xs font-black px-3 py-1 rounded-full header-font uppercase tracking-wider shadow-neonGreen">
+                        Interactive Bracket Simulator
+                    </div>
+                    
+                    <div class="flex justify-between items-center mb-6 mt-2 pb-3 border-b border-white/5">
+                        <h2 class="header-font text-lg font-bold tracking-wide text-white">
+                            ROAD TO THE CROWN PREDICTOR
+                        </h2>
+                        <button onclick="resetPredictions()" class="text-xs text-gray-400 hover:text-neonGreen transition">
+                            Reset Bracket
+                        </button>
+                    </div>
+
+                    <!-- Interactive Matches Map -->
+                    <div class="space-y-4">
+                        
+                        <!-- QUARTERFINAL 1 -->
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 hover:border-white/20 transition">
+                            <div class="text-left">
+                                <div class="text-[10px] text-gray-400 font-bold uppercase header-font">Thursday, July 9 @ 4PM</div>
+                                <div class="font-bold text-white text-lg header-font">Quarterfinal 1</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button id="team-france" onclick="selectWinner('q1', 'France')" class="px-4 py-2 rounded-xl border border-white/10 bg-black/40 hover:border-neonGreen transition font-bold text-sm min-w-[120px] flex justify-between items-center">
+                                    <span>🇫🇷 France</span>
+                                    <span class="text-[10px] text-gray-500">(Justin)</span>
+                                </button>
+                                <span class="text-gray-500 font-bold">vs</span>
+                                <button id="team-morocco" onclick="selectWinner('q1', 'Morocco')" class="px-4 py-2 rounded-xl border border-white/10 bg-black/40 hover:border-neonGreen transition font-bold text-sm min-w-[120px] flex justify-between items-center">
+                                    <span>🇲🇦 Morocco</span>
+                                    <span class="text-[10px] text-gray-500">(Rybal)</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- QUARTERFINAL 2 -->
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 hover:border-white/20 transition">
+                            <div class="text-left">
+                                <div class="text-[10px] text-gray-400 font-bold uppercase header-font">Friday, July 10 @ 3PM</div>
+                                <div class="font-bold text-white text-lg header-font">Quarterfinal 2</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button id="team-spain" onclick="selectWinner('q2', 'Spain')" class="px-4 py-2 rounded-xl border border-white/10 bg-black/40 hover:border-neonGreen transition font-bold text-sm min-w-[120px] flex justify-between items-center">
+                                    <span>🇪🇸 Spain</span>
+                                    <span class="text-[10px] text-gray-500">(Rome)</span>
+                                </button>
+                                <span class="text-gray-500 font-bold">vs</span>
+                                <button id="team-belgium" onclick="selectWinner('q2', 'Belgium')" class="px-4 py-2 rounded-xl border border-white/10 bg-black/40 hover:border-neonGreen transition font-bold text-sm min-w-[120px] flex justify-between items-center">
+                                    <span>🇧🇪 Belgium</span>
+                                    <span class="text-[10px] text-gray-500">(Josh)</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- QUARTERFINAL 3 -->
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 hover:border-white/20 transition">
+                            <div class="text-left">
+                                <div class="text-[10px] text-gray-400 font-bold uppercase header-font">Saturday, July 11 @ 5PM</div>
+                                <div class="font-bold text-white text-lg header-font">Quarterfinal 3</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button id="team-england" onclick="selectWinner('q3', 'England')" class="px-4 py-2 rounded-xl border border-white/10 bg-black/40 hover:border-neonGreen transition font-bold text-sm min-w-[120px] flex justify-between items-center">
+                                    <span>🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</span>
+                                    <span class="text-[10px] text-gray-500">(Rybal)</span>
+                                </button>
+                                <span class="text-gray-500 font-bold">vs</span>
+                                <button id="team-norway" onclick="selectWinner('q3', 'Norway')" class="px-4 py-2 rounded-xl border border-white/10 bg-black/40 hover:border-neonGreen transition font-bold text-sm min-w-[120px] flex justify-between items-center">
+                                    <span>🇳🇴 Norway</span>
+                                    <span class="text-[10px] text-gray-500">(Josh)</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- QUARTERFINAL 4 -->
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 hover:border-white/20 transition">
+                            <div class="text-left">
+                                <div class="text-[10px] text-gray-400 font-bold uppercase header-font">Saturday, July 11 @ 9PM</div>
+                                <div class="font-bold text-white text-lg header-font">Quarterfinal 4</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button id="team-argentina" onclick="selectWinner('q4', 'Argentina')" class="px-4 py-2 rounded-xl border border-white/10 bg-black/40 hover:border-neonGreen transition font-bold text-sm min-w-[120px] flex justify-between items-center">
+                                    <span>🇦🇷 Argentina</span>
+                                    <span class="text-[10px] text-gray-500">(Slater)</span>
+                                </button>
+                                <span class="text-gray-500 font-bold">vs</span>
+                                <button id="team-switzerland" onclick="selectWinner('q4', 'Switzerland')" class="px-4 py-2 rounded-xl border border-white/10 bg-black/40 hover:border-neonGreen transition font-bold text-sm min-w-[120px] flex justify-between items-center">
+                                    <span>🇨🇭 Swiss</span>
+                                    <span class="text-[10px] text-gray-500">(Rome)</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- TUESDAY RECAPS -->
+                <section class="glass-panel rounded-2xl p-6 space-y-6">
+                    <div class="border-b border-white/5 pb-3">
+                        <h2 class="header-font text-lg font-bold text-white flex items-center gap-2">
+                            <span>⚽</span> TUESDAY MATCH RECAPS
+                        </h2>
+                    </div>
+
+                    <!-- Argentina vs Egypt -->
+                    <div class="bg-black/40 p-4 rounded-xl border border-white/5 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs text-neonGreen font-semibold tracking-wide">🏆 Round of 16 Drama</span>
+                            <span class="text-xs text-gray-400">Tuesday, July 7</span>
+                        </div>
+                        <div class="flex justify-between items-center font-bold text-lg header-font">
+                            <div class="flex items-center gap-2">
+                                <span>🇦🇷 ARGENTINA</span> <span class="text-xs text-gray-400 font-normal">(Slater)</span>
+                            </div>
+                            <div class="text-neonGreen text-xl">3</div>
+                        </div>
+                        <div class="flex justify-between items-center font-bold text-lg header-font border-b border-white/5 pb-2">
+                            <div class="flex items-center gap-2">
+                                <span>🇪🇬 EGYPT</span> <span class="text-xs text-gray-400 font-normal">(Justin)</span>
+                            </div>
+                            <div class="text-gray-400 text-xl">2</div>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Egypt went up <strong class="text-white">2-0</strong> over Argentina with barely over 10 minutes remaining and it looked like they were about to pull off a massive upset. But it's tough to knock out the champs! Darryl Slater once again survives with a narrow <strong class="text-neonGreen">3-2 win</strong> to stay in the Championship chase. What an unbelievable comeback! Lionel Messi scores his <strong class="text-white">8th goal</strong> to lead the Golden Boot race and has now scored in 9 straight World Cup games. Argentina and Slater stay alive. Justin remains in first place but only has France remaining with 5 others closing the gap.
+                        </p>
+                    </div>
+
+                    <!-- Swiss vs Colombia -->
+                    <div class="bg-black/40 p-4 rounded-xl border border-white/5 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs text-neonGreen font-semibold tracking-wide">🧤 Shootout Extravaganza</span>
+                            <span class="text-xs text-gray-400">Tuesday, July 7</span>
+                        </div>
+                        <div class="flex justify-between items-center font-bold text-lg header-font">
+                            <div class="flex items-center gap-2">
+                                <span>🇨🇭 SWITZERLAND</span> <span class="text-xs text-gray-400 font-normal">(Rome)</span>
+                            </div>
+                            <div class="text-neonGreen text-xl">0 <span class="text-xs font-normal text-neonGreen/80">(W on Pen)</span></div>
+                        </div>
+                        <div class="flex justify-between items-center font-bold text-lg header-font border-b border-white/5 pb-2">
+                            <div class="flex items-center gap-2">
+                                <span>🇨🇴 COLOMBIA</span> <span class="text-xs text-gray-400 font-normal">(Adam)</span>
+                            </div>
+                            <div class="text-gray-400 text-xl">0</div>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Rome’s Swiss eliminates El Commissioner in a shootout after an grueling <strong class="text-white">0-0 battle</strong>. The Cartel is officially eliminated and Adam’s World Cup championship hopes get flushed down the drain by Rome. Absolutely brutal. Rome not only eliminates El Commissioner but is now sitting comfortably in 1st place heading into the Quarterfinals.
+                        </p>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <!-- BOTTOM SECTION: Obituaries -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+            
+            <!-- EGYPT OBITUARY -->
+            <section class="glass-panel rounded-2xl p-6 border border-emerald-500/20 relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs px-2.5 py-1 rounded-full font-bold">🕯️ IN MEMORY OF: EGYPT</span>
+                        <h3 class="header-font text-xl font-bold text-white mt-2">The Pharaohs</h3>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-xs text-gray-400">LEAGUE GRADE</div>
+                        <div class="text-2xl font-black text-emerald-400 header-font">A-</div>
+                    </div>
+                </div>
+                <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                    Coming in with hopes of advancing out of the group stage, the Pharaohs crushed those goals. Despite not scoring a lot of goals and tying their rival Iran, Egypt survived an own goal in their win against Australia and did have the defending champs and Messi down 2 goals with under 15 minutes left. Yes, a crushing loss today, but their best World Cup performance ever.
+                </p>
+                <div class="bg-black/40 p-3 rounded-lg border border-white/5 text-xs space-y-1">
+                    <div class="text-gray-400 font-bold uppercase tracking-wider">Campaign Record: 1-3-1, 7 pts, 8-7 in goals</div>
+                    <div class="grid grid-cols-2 gap-1 text-gray-300">
+                        <div>🤝 Tied Belgium 1-1</div>
+                        <div>🎉 Beat New Zealand 3-1</div>
+                        <div>🤝 Tied Iran 1-1</div>
+                        <div>🏆 Beat Australia 1-1 (SO)</div>
+                        <div class="col-span-2 text-red-400">❌ Lost to Argentina 2-3 (R16)</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COLOMBIA OBITUARY -->
+            <section class="glass-panel rounded-2xl p-6 border border-neonPurple/20 relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-neonPurple/5 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <span class="bg-neonPurple/10 text-neonPurple border border-neonPurple/30 text-xs px-2.5 py-1 rounded-full font-bold">🕯️ IN MEMORY OF: COLOMBIA</span>
+                        <h3 class="header-font text-xl font-bold text-white mt-2">The Cartel</h3>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-xs text-gray-400">LEAGUE GRADE</div>
+                        <div class="text-2xl font-black text-neonPurple header-font">C+</div>
+                    </div>
+                </div>
+                <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                    Gave up a meaningless goal in their opening rout of Uzbekistan and then posted 4 shutouts in a row with their dominating defense. The issue? They couldn't score for shit. Couldn't score at all against Portugal or the Swiss and got 1 goal against both Congo and Ghana. They won their group and finished 9th place overall but it wasn't pretty, and they are eliminated so honestly, fuck them.
+                </p>
+                <div class="bg-black/40 p-3 rounded-lg border border-white/5 text-xs space-y-1">
+                    <div class="text-gray-400 font-bold uppercase tracking-wider">Campaign Record: 3-1-1, 11 pts, 5-1 in goals</div>
+                    <div class="grid grid-cols-2 gap-1 text-gray-300">
+                        <div>🎉 Beat Uzbekistan 3-1</div>
+                        <div>🎉 Beat Congo 1-0</div>
+                        <div>🤝 Tied Portugal 0-0</div>
+                        <div>🎉 Beat Ghana 1-0 (R32)</div>
+                        <div class="col-span-2 text-red-400">❌ Lost to Switzerland 0-0 (SO)</div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+
+    <!-- Predictor State and Logic -->
+    <script>
+        // Initial state compiled directly from your league parameters
+        const baseManagers = [
+            { name: "Rome", points: 43, activeCountries: ["Spain", "Switzerland"], max: 63, color: "text-emerald-400" },
+            { name: "Justin", points: 42, activeCountries: ["France"], max: 54, color: "text-emerald-400" },
+            { name: "Rybal", points: 39, activeCountries: ["England", "Morocco"], max: 59, color: "text-emerald-400" },
+            { name: "Adam", points: 38, activeCountries: [], max: 38, color: "text-purple-400" },
+            { name: "Josh", points: 37, activeCountries: ["Belgium", "Norway"], max: 57, color: "text-emerald-400" },
+            { name: "Slater", points: 34, activeCountries: ["Argentina"], max: 46, color: "text-emerald-400" },
+            { name: "Keith", points: 29, activeCountries: [], max: 29, color: "text-purple-400" },
+            { name: "Becca", points: 20, activeCountries: [], max: 20, color: "text-purple-400" },
+        ];
+
+        // Track user predictions: key = Match ID, value = selected winning country
+        const predictions = {
+            q1: null, // France vs Morocco (Justin vs Rybal)
+            q2: null, // Spain vs Belgium (Rome vs Josh)
+            q3: null, // England vs Norway (Rybal vs Josh)
+            q4: null, // Argentina vs Swiss (Slater vs Rome)
+        };
+
+        // Standard point values for simulated wins (e.g. +5 points for QF win)
+        const POINTS_PER_WIN = 5;
+
+        // Trash talk quotes array
+        const roasts = [
+            "It’s tough to knock out the champs... but it’s remarkably easy to look like Adam.",
+            "Adam's championship hopes got flushed faster than a bad round of cards.",
+            "Rome isn't just leading; he's building an empire on the ashes of Colombia's offense.",
+            "Colombia posted 4 shutouts in a row and still found a way to go home. Magnificent.",
+            "Justin has one horse left in the race. If France trips, Rybal and Rome are waiting with the clippers.",
+            "Darryl Slater survives. You can't kill him, you can only hope Messi scores another hat-trick to cover his defense.",
+            "Becca is sitting at 20 points, playing for the love of the game at this point.",
+            "Keith watched Germany collapse and his bracket turned into a ghost town.",
+            "Morocco had Egypt down 2 goals and almost broke Justin. Almost only counts in horseshoes and hand grenades.",
+        ];
+
+        function generateRoast() {
+            const display = document.getElementById('roast-display');
+            const randomRoast = roasts[Math.floor(Math.random() * roasts.length)];
+            display.classList.add('opacity-0');
+            setTimeout(() => {
+                display.innerText = `"${randomRoast}"`;
+                display.classList.remove('opacity-0');
+            }, 150);
+        }
+
+        function selectWinner(matchId, country) {
+            // Update selected prediction
+            predictions[matchId] = country;
+            
+            // Toggle UI styles for selections
+            const matchTeams = {
+                q1: ['France', 'Morocco'],
+                q2: ['Spain', 'Belgium'],
+                q3: ['England', 'Norway'],
+                q4: ['Argentina', 'Switzerland']
+            };
+
+            matchTeams[matchId].forEach(team => {
+                const elementId = `team-${team.toLowerCase().replace(' ', '')}`;
+                const btn = document.getElementById(elementId);
+                if (btn) {
+                    if (team === country) {
+                        btn.classList.remove('bg-black/40', 'border-white/10');
+                        btn.classList.add('bg-neonGreen/20', 'border-neonGreen', 'text-neonGreen');
+                    } else {
+                        btn.classList.remove('bg-neonGreen/20', 'border-neonGreen', 'text-neonGreen');
+                        btn.classList.add('bg-black/40', 'border-white/10');
+                    }
+                }
+            });
+
+            recalculateStandings();
+        }
+
+        function resetPredictions() {
+            Object.keys(predictions).forEach(key => {
+                predictions[key] = null;
+            });
+
+            const allButtons = document.querySelectorAll('[id^="team-"]');
+            allButtons.forEach(btn => {
+                btn.classList.remove('bg-neonGreen/20', 'border-neonGreen', 'text-neonGreen');
+                btn.classList.add('bg-black/40', 'border-white/10');
+            });
+
+            recalculateStandings();
+        }
+
+        function recalculateStandings() {
+            // Clone basic standings to modify
+            const currentStandings = baseManagers.map(m => ({ ...m, simulatedPoints: m.points }));
+
+            // For each prediction made, award points to the respective manager
+            Object.values(predictions).forEach(winner => {
+                if (!winner) return;
+
+                currentStandings.forEach(manager => {
+                    // Check if manager owns this winning country
+                    if (manager.activeCountries.includes(winner)) {
+                        manager.simulatedPoints += POINTS_PER_WIN;
+                    }
+                });
+            });
+
+            // Sort standings descending by simulated points
+            currentStandings.sort((a, b) => b.simulatedPoints - a.simulatedPoints);
+
+            renderStandings(currentStandings);
+        }
+
+        function renderStandings(standingsList) {
+            const listContainer = document.getElementById('leaderboard-list');
+            listContainer.innerHTML = '';
+
+            standingsList.forEach((manager, index) => {
+                const isActive = manager.activeCountries.length > 0;
+                const activeTeamsText = isActive ? manager.activeCountries.join(', ') : 'FLUSHED DOWN THE DRAIN';
+                const rankText = index === 0 ? '👑 1st' : `${index + 1}th`;
+                
+                // Card Border glow if in top position
+                const borderClass = index === 0 ? 'border-neonGreen/50 shadow-neonGreen' : 'border-white/5';
+                const positionTextClass = index === 0 ? 'text-neonGreen font-black' : 'text-white font-bold';
+
+                const cardHTML = `
+                    <div class="bg-black/50 p-4 rounded-xl border ${borderClass} transition duration-300 flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs font-mono header-font ${positionTextClass}">${rankText}</span>
+                            <div>
+                                <div class="font-bold text-white tracking-wide">${manager.name.toUpperCase()}</div>
+                                <div class="text-[10px] ${isActive ? 'text-neonGreen/80' : 'text-neonPurple/80'} font-semibold tracking-wider">
+                                    ${activeTeamsText}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-lg font-black text-white font-mono">${manager.simulatedPoints} <span class="text-xs text-gray-500 font-normal">pts</span></div>
+                            <div class="text-[9px] text-gray-400 font-mono">Max Potential: ${manager.max}</div>
+                        </div>
+                    </div>
+                `;
+                listContainer.innerHTML += cardHTML;
+            });
+        }
+
+        // Run on initial load
+        window.onload = function() {
+            recalculateStandings();
+        };
+    </script>
+</body>
+</html>```
+
+```

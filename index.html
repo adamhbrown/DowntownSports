@@ -302,6 +302,69 @@
             padding: 4px 0;
             font-weight: bold;
         }
+
+        .champions-hero {
+            background: linear-gradient(135deg, rgba(0, 243, 255, 0.16), rgba(255, 215, 0, 0.08));
+            border: 1px solid rgba(0, 243, 255, 0.35);
+            border-radius: 18px;
+            padding: 24px;
+            margin-bottom: 22px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+        }
+
+        .champions-hero h2 {
+            margin: 0 0 8px 0;
+            color: #ffffff;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .champions-hero p {
+            margin: 0;
+            color: #cbd5e1;
+            max-width: 900px;
+            line-height: 1.55;
+        }
+
+        .champions-table td:first-child,
+        .champions-table th:first-child {
+            text-align: center;
+            width: 70px;
+        }
+
+        .rank-medal {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 999px;
+            background: #334155;
+            color: #ffffff;
+            font-weight: 900;
+        }
+
+        .rank-medal.gold { background: linear-gradient(135deg, #facc15, #f97316); color: #111827; }
+        .rank-medal.silver { background: linear-gradient(135deg, #e5e7eb, #94a3b8); color: #111827; }
+        .rank-medal.bronze { background: linear-gradient(135deg, #f59e0b, #92400e); }
+
+        .metric-pill {
+            display: inline-block;
+            min-width: 72px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(0, 243, 255, 0.12);
+            color: #67e8f9;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        .source-note {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-top: 14px;
+        }
     </style>
 </head>
 <body>
@@ -328,6 +391,7 @@
             <button class="tab-btn" onclick="switchTab('standings')">Manager Standings</button>
             <button class="tab-btn" onclick="switchTab('bracket')">Knockout Bracket</button>
             <button class="tab-btn" onclick="switchTab('golden-boot')">Golden Boot Race</button>
+            <button class="tab-btn" onclick="switchTab('champions')">Champions Offense</button>
         </div>
 
         <div id="view-groups" class="view-section active">
@@ -392,6 +456,29 @@
                     </tbody>
             </table>
         </div>
+
+        <div id="view-champions" class="view-section">
+            <section class="champions-hero">
+                <h2>Champion Offensive Runs Per Game</h2>
+                <p>Every champion from the provided matrix is sorted from highest to lowest OFF/GM so league admins, fans, and pool players can immediately see the most explosive offenses in the field.</p>
+                <div class="source-note">Sorted by OFF/GM; ties are broken by total runs scored, then fewer games played.</div>
+            </section>
+            <table class="leaderboard-table champions-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Champion</th>
+                        <th>City / Program</th>
+                        <th>Record</th>
+                        <th>Runs</th>
+                        <th>Allowed</th>
+                        <th>OFF/GM</th>
+                        <th>DEF/GM</th>
+                    </tr>
+                </thead>
+                <tbody id="champions-offense-body"></tbody>
+            </table>
+        </div>
     </div>
 
     <script>
@@ -424,6 +511,74 @@
             'Vinícius Júnior': { team: 'BRAZIL', goals: 0 },
             'Jude Bellingham': { team: 'ENGLAND', goals: 0 }
         };
+
+        const championsRegistry = [
+            { champion: 'North Dakota', city: 'Fargo', record: '2-0', runs: 34, allowed: 0, offGm: 17.00, defGm: 0.00 },
+            { champion: 'Idaho', city: 'West Valley', record: '8-0', runs: 109, allowed: 1, offGm: 13.63, defGm: 0.13 },
+            { champion: 'Nebraska', city: 'Kearney', record: '4-0', runs: 54, allowed: 4, offGm: 13.50, defGm: 1.00 },
+            { champion: 'Sydney, Nova Scotia', city: 'Canadian Regional', record: '4-0', runs: 51, allowed: 6, offGm: 12.75, defGm: 1.50 },
+            { champion: 'Calgary, Alberta', city: 'Canadian Regional', record: '5-0', runs: 48, allowed: 4, offGm: 12.00, defGm: 0.80 },
+            { champion: 'Nicaragua', city: 'International', record: '10-0', runs: 116, allowed: 14, offGm: 11.60, defGm: 1.40 },
+            { champion: 'Utah', city: 'Lone Peak', record: '4-0', runs: 46, allowed: 8, offGm: 11.50, defGm: 2.00 },
+            { champion: 'Kentucky', city: 'North Oldham', record: '10-0', runs: 113, allowed: 17, offGm: 11.30, defGm: 1.70 },
+            { champion: 'Arizona', city: 'Chandler', record: '11-0', runs: 122, allowed: 11, offGm: 11.09, defGm: 1.00 },
+            { champion: 'Minnesota', city: 'Coon Rapids Andover', record: '11-1', runs: 131, allowed: 26, offGm: 10.91, defGm: 2.16 },
+            { champion: 'Illinois', city: 'Burbank', record: '9-0', runs: 98, allowed: 24, offGm: 10.89, defGm: 2.67 },
+            { champion: 'New Hampshire', city: 'Plymouth', record: '12-3', runs: 161, allowed: 44, offGm: 10.73, defGm: 2.93 },
+            { champion: 'Daniel Boone', city: 'Missouri', record: '6-0', runs: 63, allowed: 13, offGm: 10.50, defGm: 2.17 },
+            { champion: 'South Korea', city: 'International', record: '6-0', runs: 63, allowed: 1, offGm: 10.50, defGm: 0.16 },
+            { champion: 'Washington DC', city: 'Capitol Hill', record: '7-0', runs: 72, allowed: 17, offGm: 10.28, defGm: 2.42 },
+            { champion: 'South Carolina', city: 'Irmo', record: '5-0', runs: 51, allowed: 3, offGm: 10.20, defGm: 0.60 },
+            { champion: 'West Texas', city: 'Boerne', record: '12-1', runs: 132, allowed: 30, offGm: 10.15, defGm: 2.31 },
+            { champion: 'Nevada', city: 'Paseo Verde', record: '7-0', runs: 71, allowed: 15, offGm: 10.14, defGm: 2.14 },
+            { champion: 'Trois Rivières, Quebec', city: 'Canadian Regional', record: '4-0', runs: 40, allowed: 12, offGm: 10.00, defGm: 3.00 },
+            { champion: 'New Mexico', city: 'Eastdale', record: '8-1', runs: 90, allowed: 27, offGm: 10.00, defGm: 3.00 },
+            { champion: 'Oklahoma', city: 'Tulsa', record: '2-0', runs: 20, allowed: 0, offGm: 10.00, defGm: 0.00 },
+            { champion: 'Ohio', city: 'Hamilton Westside', record: '4-0', runs: 39, allowed: 9, offGm: 9.75, defGm: 2.25 },
+            { champion: 'Montana', city: 'Billings Big Sky', record: '13-2', runs: 146, allowed: 40, offGm: 9.73, defGm: 2.66 },
+            { champion: 'Florida', city: 'Chaires-Capitola', record: '8-0', runs: 76, allowed: 6, offGm: 9.50, defGm: 0.75 },
+            { champion: 'Georgia', city: 'Columbus', record: '7-0', runs: 67, allowed: 7, offGm: 9.57, defGm: 1.00 },
+            { champion: 'Colorado', city: 'Coal Creek', record: '7-0', runs: 67, allowed: 11, offGm: 9.57, defGm: 1.57 },
+            { champion: 'North California', city: 'San Ramon Valley', record: '11-0', runs: 104, allowed: 19, offGm: 9.45, defGm: 1.72 },
+            { champion: 'Wisconsin', city: 'Whitefish Bay', record: '8-1', runs: 85, allowed: 27, offGm: 9.44, defGm: 3.00 },
+            { champion: 'North Carolina', city: 'Lake Norman', record: '7-0', runs: 66, allowed: 28, offGm: 9.43, defGm: 4.00 },
+            { champion: 'Australia', city: 'International', record: '11-2', runs: 123, allowed: 52, offGm: 9.46, defGm: 4.00 },
+            { champion: 'Dominican Rep', city: 'International', record: '7-1', runs: 75, allowed: 36, offGm: 9.38, defGm: 4.50 },
+            { champion: 'Tennessee', city: 'Nolensville', record: '7-0', runs: 65, allowed: 14, offGm: 9.28, defGm: 2.00 },
+            { champion: 'Alabama', city: 'Phenix City', record: '4-0', runs: 37, allowed: 3, offGm: 9.25, defGm: 0.75 },
+            { champion: 'Iowa', city: 'Davenport NW', record: '10-1', runs: 100, allowed: 30, offGm: 9.09, defGm: 2.72 },
+            { champion: 'East Texas', city: 'Lamar', record: '11-0', runs: 100, allowed: 12, offGm: 9.09, defGm: 1.09 },
+            { champion: 'Japan', city: 'International', record: '9-0', runs: 81, allowed: 15, offGm: 9.00, defGm: 1.67 },
+            { champion: 'West Virginia', city: 'Shady Springs', record: '8-0', runs: 71, allowed: 17, offGm: 8.88, defGm: 2.13 },
+            { champion: 'Maryland', city: 'Berlin', record: '8-0', runs: 70, allowed: 23, offGm: 8.75, defGm: 2.87 },
+            { champion: 'Michigan', city: 'Greater Bay', record: '10-0', runs: 87, allowed: 13, offGm: 8.70, defGm: 1.30 },
+            { champion: 'Kansas', city: 'JL Hutchinson', record: '7-0', runs: 60, allowed: 10, offGm: 8.57, defGm: 1.42 },
+            { champion: 'Czechia', city: 'International', record: '9-0', runs: 77, allowed: 8, offGm: 8.55, defGm: 0.88 },
+            { champion: 'Mississippi', city: 'Clinton', record: '2-0', runs: 17, allowed: 4, offGm: 8.50, defGm: 2.00 },
+            { champion: 'New York', city: 'Port Washington', record: '10-2', runs: 98, allowed: 24, offGm: 8.16, defGm: 2.00 },
+            { champion: 'Virginia', city: 'SYA Centreville', record: '11-0', runs: 89, allowed: 17, offGm: 8.09, defGm: 1.55 },
+            { champion: 'Washington', city: 'Soundview', record: '10-1', runs: 89, allowed: 9, offGm: 8.09, defGm: 0.82 },
+            { champion: 'Hawaii', city: 'Kawaihau', record: '8-1', runs: 71, allowed: 22, offGm: 7.88, defGm: 2.44 },
+            { champion: 'Oregon', city: 'Bend North', record: '8-0', runs: 62, allowed: 2, offGm: 7.75, defGm: 0.25 },
+            { champion: 'Mexico', city: 'International', record: '6-1', runs: 46, allowed: 12, offGm: 7.67, defGm: 1.71 },
+            { champion: 'Massachusetts', city: 'Bridgewater', record: '10-2', runs: 91, allowed: 62, offGm: 7.58, defGm: 5.17 },
+            { champion: 'Indiana', city: 'Jasper', record: '6-1', runs: 53, allowed: 28, offGm: 7.57, defGm: 4.00 },
+            { champion: 'Little Mountain, BC', city: 'Canadian Regional', record: '11-1', runs: 89, allowed: 21, offGm: 7.42, defGm: 1.75 },
+            { champion: 'Delaware', city: 'Naamans', record: '6-0', runs: 44, allowed: 23, offGm: 7.33, defGm: 3.83 },
+            { champion: 'Connecticut', city: 'Darien', record: '14-2', runs: 113, allowed: 42, offGm: 7.06, defGm: 2.63 },
+            { champion: 'Rhode Island', city: 'Lincoln', record: '10-3', runs: 91, allowed: 22, offGm: 7.00, defGm: 1.69 },
+            { champion: 'South California', city: 'Sweetwater Valley', record: '12-1', runs: 89, allowed: 14, offGm: 6.85, defGm: 1.08 },
+            { champion: 'Arkansas', city: 'Junior Deputy', record: '3-0', runs: 20, allowed: 3, offGm: 6.66, defGm: 1.00 },
+            { champion: 'Louisiana', city: 'Ascension Parish', record: '9-3', runs: 73, allowed: 30, offGm: 6.08, defGm: 2.50 },
+            { champion: 'Vermont', city: 'Camels Hump', record: '10-1', runs: 67, allowed: 30, offGm: 6.09, defGm: 2.72 },
+            { champion: 'Panama', city: 'International', record: '11-3', runs: 91, allowed: 31, offGm: 6.05, defGm: 2.21 },
+            { champion: 'Wyoming', city: 'Laramie', record: '6-1', runs: 42, allowed: 28, offGm: 6.00, defGm: 4.00 },
+            { champion: 'Ottawa, Ontario', city: 'Canadian Regional', record: '7-1', runs: 63, allowed: 29, offGm: 7.88, defGm: 3.63 },
+            { champion: 'Regina, Saskatchewan', city: 'Canadian Regional', record: '3-1', runs: 14, allowed: 16, offGm: 3.50, defGm: 4.00 },
+            { champion: 'Curacao', city: 'International', record: '5-4', runs: 38, allowed: 28, offGm: 4.22, defGm: 3.11 },
+            { champion: 'Maine', city: 'Gray/New Gloucester', record: '10-1', runs: 47, allowed: 19, offGm: 4.27, defGm: 1.73 },
+            { champion: 'Glacé Bay, Nova Scotia', city: 'Canadian Regional', record: '0-0', runs: 0, allowed: 0, offGm: 0.00, defGm: 0.00 }
+        ];
 
         // Stadium Entrance Gates Logic
         function crackStadiumGates() {
@@ -531,11 +686,44 @@
             });
         }
 
+        function getRankClass(rank) {
+            if (rank === 1) return 'gold';
+            if (rank === 2) return 'silver';
+            if (rank === 3) return 'bronze';
+            return '';
+        }
+
+        // Render champion offense rankings from the supplied runs-per-game matrix.
+        function renderChampionOffenseStandings() {
+            const tbody = document.getElementById('champions-offense-body');
+            tbody.innerHTML = '';
+
+            championsRegistry
+                .slice()
+                .sort((a, b) => b.offGm - a.offGm || b.runs - a.runs || (a.record.split('-').reduce((sum, value) => sum + Number(value), 0) - b.record.split('-').reduce((sum, value) => sum + Number(value), 0)))
+                .forEach((team, idx) => {
+                    const rank = idx + 1;
+                    tbody.innerHTML += `
+                        <tr>
+                            <td><span class="rank-medal ${getRankClass(rank)}">${rank}</span></td>
+                            <td><strong>${team.champion}</strong></td>
+                            <td>${team.city}</td>
+                            <td>${team.record}</td>
+                            <td>${team.runs}</td>
+                            <td>${team.allowed}</td>
+                            <td><span class="metric-pill">${team.offGm.toFixed(2)}</span></td>
+                            <td>${team.defGm.toFixed(2)}</td>
+                        </tr>
+                    `;
+                });
+        }
+
         // Initialize Runtime State Hooks
         window.onload = () => {
             buildGroupMatrices();
             renderManagerStandings();
             renderGoldenBootStandings();
+            renderChampionOffenseStandings();
         };
     </script>
 </body>
